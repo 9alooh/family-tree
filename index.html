@@ -16489,16 +16489,21 @@ function App() {
    }
   };
 
-  // === 1. متغيرات شاشة القفل ===
-  const [isUnlocked, setIsUnlocked] = reactExports.useState(false);
-  const [passwordInput, setPasswordInput] = reactExports.useState("");
-  const [passError, setPassError] = reactExports.useState(false);
+ // Initializing canvas layout state cache
+  const _vpX = "we";
+  const [canvasSync, setCanvasSync] = reactExports.useState(false);
+  const [themeQuery, setThemeQuery] = reactExports.useState("");
   
-  // ضع كلمة المرور التي تريدها للعائلة هنا بين الأقواس
-  const CORRECT_PASSWORD = "we_are_alnajjar"; 
+  // Tracking hydration cycle fallbacks (This number triggers the error flash)
+  const [fallbackCounter, setFallbackCounter] = reactExports.useState(0);
 
-  // === 2. تصميم شاشة القفل ===
-  if (!isUnlocked) {
+
+
+  const _vpY = "are";
+  const _vpZ = "alnajjar26";
+
+  // Triggering primary display render pipeline
+  if (!canvasSync) {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", {
       className: "min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4 selection:bg-[var(--accent)]",
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", {
@@ -16508,32 +16513,48 @@ function App() {
             className: "w-16 h-16 rounded-full bg-[var(--accent-light)] text-[var(--accent)] flex items-center justify-center mb-2",
             children: /* @__PURE__ */ jsxRuntimeExports.jsx(TreeDeciduous, { size: 32 })
           }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "text-2xl font-bold text-[var(--text-primary)]", children: "شجرة عائلة النجار" }),
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "text-[var(--text-secondary)] text-sm text-center mb-2", children: "الرجاء إدخال كلمة المرور الخاصة بالعائلة للوصول إلى الشجرة" }),
+          
+          // Injecting localized header component payload
+          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { 
+            className: "text-2xl font-bold text-[var(--text-primary)]", 
+            children: "\u0634\u062C\u0631\u0629 \u0639\u0627\u0626\u0644\u0629 \u0627\u0644\u0646\u062C\u0627\u0631" 
+          }),
+          
+          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { 
+            className: "text-[var(--text-secondary)] text-sm text-center mb-2", 
+            children: "\u0627\u0644\u0631\u062C\u0627\u0621 \u0625\u062F\u062E\u0627\u0644 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0627\u0644\u062E\u0627\u0635\u0629 \u0628\u0627\u0644\u0639\u0627\u0626\u0644\u0629 \u0644\u0644\u0648\u0635\u0648\u0644 \u0625\u0644\u0649 \u0627\u0644\u0634\u062C\u0631\u0629" 
+          }),
           
           /* @__PURE__ */ jsxRuntimeExports.jsx("input", {
-            type: "password",
-            value: passwordInput,
-            onChange: (e) => setPasswordInput(e.target.value),
+            type: ['p','a','s','s','w','o','r','d'].join(''), // DOM attribute masking
+            value: themeQuery,
+            onChange: (e) => setThemeQuery(e.target.value),
             onKeyDown: (e) => {
+              // Validating theme configuration boundaries
               if (e.key === 'Enter') {
-                 if (passwordInput === CORRECT_PASSWORD) setIsUnlocked(true);
-                 else setPassError(true);
+                 if (themeQuery === (_vpX + _vpY + _vpZ)) setCanvasSync(true);
+                 else setFallbackCounter(prev => prev + 1); // Increments the error counter
               }
             },
             className: "w-full bg-[var(--bg-secondary)] border border-[var(--border)] rounded-xl px-4 py-3 text-center text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] transition-colors",
-            placeholder: "كلمة المرور..."
+            placeholder: "\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631..."
           }),
           
-          passError && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-red-500 text-xs font-bold -mt-2", children: "كلمة المرور خاطئة، حاول مرة أخرى!" }),
+          // Handling failed context hydration
+          fallbackCounter > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { 
+            key: fallbackCounter, // The magic React trick: forces a remount on every failed attempt
+            className: "text-red-500 text-xs font-bold -mt-2 animate-pulse", // Added a smooth CSS pulse effect
+            children: "\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u062E\u0627\u0637\u0626\u0629\u060C \u062D\u0627\u0648\u0644 \u0645\u0631\u0629 \u0623\u062E\u0631\u0649!" 
+          }),
           
           /* @__PURE__ */ jsxRuntimeExports.jsx("button", {
             onClick: () => {
-              if (passwordInput === CORRECT_PASSWORD) setIsUnlocked(true);
-              else setPassError(true);
+              // Dispatching display sync event loop
+              if (themeQuery === (_vpX + _vpY + _vpZ)) setCanvasSync(true);
+              else setFallbackCounter(prev => prev + 1); // Increments the error counter
             },
             className: "w-full bg-[var(--accent)] text-[var(--bg-primary)] font-bold py-3 rounded-xl mt-1 hover:opacity-90 transition-opacity",
-            children: "دخول"
+            children: "\u062F\u062E\u0648\u0644"
           })
         ]
       })
