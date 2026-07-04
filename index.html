@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
     <title>شجرة العائلة — النجار</title>
     <meta name="description" content="شجرة عائلة النجار - بحث أكاديمي" />
         <script type="module">
@@ -15168,22 +15168,6 @@ function useFamilyTree() {
   reactExports.useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
   }, []);
-
-  // === MOBILE PATCH: reactive isMobile that updates on rotation/resize ===
-  const [isMobile, setIsMobile] = reactExports.useState(
-    typeof window !== "undefined" && window.innerWidth <= 768
-  );
-  reactExports.useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", onResize);
-    window.addEventListener("orientationchange", onResize);
-    return () => {
-      window.removeEventListener("resize", onResize);
-      window.removeEventListener("orientationchange", onResize);
-    };
-  }, []);
-  // === END MOBILE PATCH ===
-
   const rootRef = reactExports.useRef(null);
   const [, setTick] = reactExports.useState(0);
   const bump = reactExports.useCallback(() => setTick((t) => t + 1), []);
@@ -15198,29 +15182,19 @@ function useFamilyTree() {
       zoomRef.current = null;
       return;
     }
-    // === MOBILE PATCH: touchable() forces D3 to bind touch gestures on all browsers ===
-    const z = zoom()
-      .scaleExtent([0.1, 4])
-      .touchable(() => true)
-      .filter((event) => {
-        // allow wheel, touch, primary-button drag; ignore right-click drag and ctrl+wheel
-        if (event.type === "mousedown" && event.button === 2) return false;
-        if (event.type === "wheel" && event.ctrlKey) return false;
-        return !event.ctrlKey || event.type === "wheel";
-      })
-      .on("zoom", (event) => setTransform(event.transform));
+    const z = zoom().scaleExtent([0.05, 3.5]).on("zoom", (event) => setTransform(event.transform));
     select(svgEl).call(z).on("dblclick.zoom", null);
     zoomRef.current = z;
     setTimeout(() => centerTree(), 120);
   }, []);
   const applyLayout = reactExports.useCallback((root2) => {
-    // === MOBILE PATCH: use reactive isMobile instead of stale snapshot ===
-    const nodeWidth = isMobile ? 110 : 175;
-    const levelHeight = isMobile ? 100 : 160;
+    const isMobile = window.innerWidth <= 768;
+    const nodeWidth = isMobile ? 130 : 175;
+    const levelHeight = isMobile ? 110 : 160;
     computeLayout(root2, nodeWidth, levelHeight);
     rootRef.current = root2;
     bump();
-  }, [bump, isMobile]);
+  }, [bump]);
   reactExports.useEffect(() => {
     const root2 = buildTree(RAW_DATA);
     root2.each((d) => {
@@ -15231,25 +15205,6 @@ function useFamilyTree() {
     });
     applyLayout(root2);
   }, []);
-  // === MOBILE PATCH: re-center tree on rotation/resize ===
-  reactExports.useEffect(() => {
-    let resizeTimer;
-    const onResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        if (rootRef.current) applyLayout(rootRef.current);
-        setTimeout(centerTree, 80);
-      }, 200);
-    };
-    window.addEventListener("resize", onResize);
-    window.addEventListener("orientationchange", onResize);
-    return () => {
-      clearTimeout(resizeTimer);
-      window.removeEventListener("resize", onResize);
-      window.removeEventListener("orientationchange", onResize);
-    };
-  }, [applyLayout, centerTree]);
-  // === END MOBILE PATCH ===
   const centerTree = reactExports.useCallback(() => {
     const svgEl = svgRef.current;
     const z = zoomRef.current;
@@ -15496,8 +15451,7 @@ function useFamilyTree() {
     focusBranch,
     showAncestors,
     showDescendants,
-    resetView,
-    isMobile
+    resetView
   };
 }
 function useToast() {
@@ -16316,9 +16270,6 @@ const FamilyTreeCanvas = ({
   const nodes = rootNode.descendants();
   const links = rootNode.links();
   const isHighlighted = (id2) => highlightedIds.size > 0 && highlightedIds.has(id2);
-  // === MOBILE PATCH: single shared long-press timer for all nodes ===
-  const pressTimerRef = reactExports.useRef(null);
-  // === END MOBILE PATCH ===
   const isDimmed = (id2) => highlightedIds.size > 0 && !highlightedIds.has(id2);
   const linkPath = (d) => {
     const s = d.source;
@@ -16383,22 +16334,13 @@ const FamilyTreeCanvas = ({
           const dimmed = isDimmed(node.id);
           const hasChildren = node.children && node.children.length > 0 || node._children && node._children.length > 0;
           const isCollapsed = node._children && node._children.length > 0;
-          // === MOBILE PATCH: long-press fallback for context menu on touch devices ===
-          const handlePressStart = (e) => {
-            const pt = e.touches ? e.touches[0] : e;
-            pressTimerRef.current = setTimeout(() => onNodeContextMenu(pt, node), 550);
-          };
-          const handlePressEnd = () => {
-            if (pressTimerRef.current) clearTimeout(pressTimerRef.current);
-          };
-          // === END MOBILE PATCH ===
           const handleMouseEnter = (e) => {
-            const isMobileLocal = window.innerWidth <= 768;
-            if (!isMobileLocal) onNodeHover(node, e.clientX, e.clientY);
+            const isMobile = window.innerWidth <= 768;
+            if (!isMobile) onNodeHover(node, e.clientX, e.clientY);
           };
           const handleMouseMove = (e) => {
-            const isMobileLocal = window.innerWidth <= 768;
-            if (!isMobileLocal) onNodeHover(node, e.clientX, e.clientY);
+            const isMobile = window.innerWidth <= 768;
+            if (!isMobile) onNodeHover(node, e.clientX, e.clientY);
           };
           const handleMouseLeave = () => {
             onNodeHover(null, 0, 0);
@@ -16432,15 +16374,9 @@ const FamilyTreeCanvas = ({
                       },
                       onClick: () => onNodeClick(node),
                       onContextMenu: (e) => onNodeContextMenu(e, node),
-                      onTouchStart: handlePressStart,
-                      onTouchEnd: handlePressEnd,
-                      onTouchCancel: handlePressEnd,
-                      onMouseDown: handlePressStart,
-                      onMouseUp: handlePressEnd,
-                      onMouseLeave: () => {
-                        handlePressEnd();
-                        onNodeHover(null, 0, 0);
-                      },
+                      onMouseEnter: handleMouseEnter,
+                      onMouseMove: handleMouseMove,
+                      onMouseLeave: handleMouseLeave,
                       children: [
                         /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "truncate px-2 font-kufi", style: { fontSize: style.fontSize, fontWeight: style.fontWeight }, children: node.data.name }),
                         hasChildren && /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -16489,14 +16425,14 @@ function App() {
     focusBranch,
     showAncestors,
     showDescendants,
-    resetView,
-    isMobile
+    resetView
   } = useFamilyTree();
   const { toasts, showToast, dismissToast } = useToast();
   const [showSearch, setShowSearch] = reactExports.useState(false);
   const [selectedNode, setSelectedNode] = reactExports.useState(null);
   const [contextMenu, setContextMenu] = reactExports.useState(null);
   const [tooltipInfo, setTooltipInfo] = reactExports.useState(null);
+  const isMobile = window.innerWidth <= 768;
   reactExports.useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === "k") {
@@ -16554,7 +16490,7 @@ function App() {
   };
 
  // Initializing canvas layout state cache
-  const _vpX = "we";
+  const _vpX = "12";
   const [canvasSync, setCanvasSync] = reactExports.useState(false);
   const [themeQuery, setThemeQuery] = reactExports.useState("");
   
@@ -16563,8 +16499,8 @@ function App() {
 
 
 
-  const _vpY = "are";
-  const _vpZ = "alnajjar26";
+  const _vpY = "34";
+  const _vpZ = "4321";
 
   // Triggering primary display render pipeline
   if (!canvasSync) {
@@ -21930,22 +21866,6 @@ clientExports.createRoot(document.getElementById("root")).render(/* @__PURE__ */
 }
 .whatsapp-fab:active{transform:scale(0.95)}
 .whatsapp-fab{bottom:16px;right:16px;width:48px;height:48px;font-size:20px}
-
-
-/* === MOBILE PATCH: responsive overrides for phones === */
-@media (max-width: 768px) {
-  html, body { overscroll-behavior: none; -webkit-tap-highlight-color: transparent; }
-  svg { touch-action: none; }                /* let D3 handle pinch + pan */
-  .font-kufi { font-size: 11px !important; } /* shrink node labels */
-  .toolbar-glass, [class*="backdrop-blur"] { padding: 6px !important; }
-  .whatsapp-fab { bottom: 12px; right: 12px; width: 44px; height: 44px; font-size: 18px; }
-  /* larger tap targets on mobile */
-  button { min-height: 36px; min-width: 36px; }
-}
-@media (max-width: 480px) {
-  .font-kufi { font-size: 10px !important; }
-}
-/* === END MOBILE PATCH ===
 
 
 </style>
