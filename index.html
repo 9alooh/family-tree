@@ -15190,8 +15190,8 @@ function useFamilyTree() {
   }, []);
   const applyLayout = reactExports.useCallback((root2) => {
     const isMobile = window.innerWidth <= 768;
-    const nodeWidth = isMobile ? 130 : 175;
-    const levelHeight = isMobile ? 110 : 160;
+    const nodeWidth = isMobile ? 185 : 185;
+    const levelHeight = isMobile ? 145 : 160;
     computeLayout(root2, nodeWidth, levelHeight);
     rootRef.current = root2;
     bump();
@@ -15994,9 +15994,9 @@ const SearchPanel = ({ onClose, onSelect }) => {
     }, 120);
     return () => clearTimeout(timer2);
   }, [query]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "fixed inset-0 z-50 flex items-start justify-center pt-[10vh] px-4 pointer-events-none", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "fixed inset-0 z-50 flex items-start justify-center pt-[10vh] px-4 pointer-events-none", dir: "rtl", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-auto", onClick: onClose }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-[560px] bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden pointer-events-auto flex flex-col animate-scale-in relative z-10 max-h-[80vh]", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-[560px] mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden pointer-events-auto flex flex-col animate-scale-in relative z-10 max-h-[80vh]", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center px-4 py-3 border-b border-[var(--border)] bg-[var(--bg-primary)]", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { className: "text-[var(--text-secondary)] w-5 h-5 ml-3 shrink-0" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
