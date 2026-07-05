@@ -15447,6 +15447,16 @@ function useFamilyTree() {
     const my = e.clientY - rect.top;
     select(svgEl).call(z.scaleBy, factor, [mx, my]);
   }, []);
+  const [viewportHeight, setViewportHeight] = reactExports.useState(() => window.innerHeight);
+  reactExports.useEffect(() => {
+    const handleViewportResize = () => setViewportHeight(window.innerHeight);
+    window.addEventListener("resize", handleViewportResize);
+    window.addEventListener("orientationchange", handleViewportResize);
+    return () => {
+      window.removeEventListener("resize", handleViewportResize);
+      window.removeEventListener("orientationchange", handleViewportResize);
+    };
+  }, []);
   return {
     rootNode: rootRef.current,
     svgCallbackRef,
@@ -15467,7 +15477,8 @@ function useFamilyTree() {
     focusBranch,
     showAncestors,
     showDescendants,
-    resetView
+    resetView,
+    viewportHeight
   };
 }
 function useToast() {
@@ -16281,7 +16292,8 @@ const FamilyTreeCanvas = ({
   onNodeClick,
   onNodeContextMenu,
   onToggleNode,
-  onNodeHover
+  onNodeHover,
+  viewportHeightPx
 }) => {
   const nodes = rootNode.descendants();
   const links = rootNode.links();
@@ -16302,6 +16314,7 @@ const FamilyTreeCanvas = ({
     {
       ref: svgRef,
       className: "w-full h-[100dvh] tree-canvas-wrap cursor-grab active:cursor-grabbing outline-none",
+      style: viewportHeightPx ? { height: `${viewportHeightPx}px` } : void 0,
       onPointerLeave: () => onNodeHover(null, 0, 0),
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs("g", { ref: gRef, transform: `translate(${transform.x},${transform.y}) scale(${transform.k})`, children: [
         /* @__PURE__ *//* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -16444,7 +16457,8 @@ function App() {
     focusBranch,
     showAncestors,
     showDescendants,
-    resetView
+    resetView,
+    viewportHeight
   } = useFamilyTree();
   const { toasts, showToast, dismissToast } = useToast();
   const [showSearch, setShowSearch] = reactExports.useState(false);
@@ -16606,6 +16620,7 @@ function App() {
     "div",
     {
       className: "relative w-full h-[100dvh] overflow-hidden bg-ambient font-sans selection:bg-[var(--accent)] selection:text-[var(--bg-primary)]",
+      style: { height: `${viewportHeight}px` },
       onWheel: handleContainerWheel,
       children: [
         
@@ -16714,6 +16729,7 @@ className: "stats-bar-container pointer-events-none",
             onNodeClick: handleNodeClick,
             onNodeContextMenu: handleContextMenu,
             onToggleNode: toggleNode,
+            viewportHeightPx: viewportHeight,
             onNodeHover: (node, x, y) => {
               if (node) setTooltipInfo({ node, x, y });
               else setTooltipInfo(null);
