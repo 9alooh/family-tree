@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
     <title>شجرة العائلة — النجار</title>
     <meta name="description" content="شجرة عائلة النجار - بحث أكاديمي" />
         <script type="module">
@@ -15088,41 +15088,41 @@ function computeLayout(root2, nodeWidth, levelHeight) {
   return root2;
 }
 function getGenerationStyle(depth, theme) {
-  const isMobile = typeof window !== "undefined" && window.innerWidth <= 768;
-  const scale = isMobile ? 0.55 : 1;
-
+  const mobile = typeof window !== "undefined" && window.innerWidth <= 768;
+  const sc = mobile ? 0.7 : 1;
+  const r = (v) => Math.round(v * sc);
   if (theme === "ocean") {
     switch (depth) {
       case 0:
-        return { fill: "#2A1E0F", stroke: "#C4923A", textColor: "#FFFFFF", w: Math.round(184*scale), h: Math.round(54*scale), rx: Math.round(16*scale), fontSize: Math.round(15*scale), fontWeight: 800, glowColor: "rgba(196,146,58,0.45)", borderWidth: 2 };
+        return { fill: "#2A1E0F", stroke: "#C4923A", textColor: "#FFFFFF", w: r(184), h: r(54), rx: r(16), fontSize: Math.max(r(15), 10), fontWeight: 800, glowColor: "rgba(196,146,58,0.45)", borderWidth: 2 };
       case 1:
-        return { fill: "#231909", stroke: "#A87B32", textColor: "#EDE4D4", w: Math.round(170*scale), h: Math.round(50*scale), rx: Math.round(14*scale), fontSize: Math.round(14*scale), fontWeight: 700, glowColor: "rgba(168,123,50,0.30)", borderWidth: 2 };
+        return { fill: "#231909", stroke: "#A87B32", textColor: "#EDE4D4", w: r(170), h: r(50), rx: r(14), fontSize: Math.max(r(14), 10), fontWeight: 700, glowColor: "rgba(168,123,50,0.30)", borderWidth: 2 };
       case 2:
-        return { fill: "#1E150A", stroke: "#8F6829", textColor: "#E4D8C4", w: Math.round(158*scale), h: Math.round(46*scale), rx: Math.round(13*scale), fontSize: Math.round(13*scale), fontWeight: 700, glowColor: "rgba(143,104,41,0.20)", borderWidth: 1.5 };
+        return { fill: "#1E150A", stroke: "#8F6829", textColor: "#E4D8C4", w: r(158), h: r(46), rx: r(13), fontSize: Math.max(r(13), 9), fontWeight: 700, glowColor: "rgba(143,104,41,0.20)", borderWidth: 1.5 };
       case 3:
-        return { fill: "#1A1208", stroke: "#785A24", textColor: "#DAD0B4", w: Math.round(150*scale), h: Math.round(44*scale), rx: Math.round(12*scale), fontSize: Math.round(13*scale), fontWeight: 600, glowColor: "rgba(120,90,36,0.10)", borderWidth: 1.5 };
+        return { fill: "#1A1208", stroke: "#785A24", textColor: "#DAD0B4", w: r(150), h: r(44), rx: r(12), fontSize: Math.max(r(13), 9), fontWeight: 600, glowColor: "rgba(120,90,36,0.10)", borderWidth: 1.5 };
       default: {
-        const r = Math.min(depth - 4, 10);
-        const w = Math.max(142 - r * 4, 104);
-        const h = Math.max(40 - r * 2, 30);
-        return { fill: `rgba(26,18,8,${0.92 - r * 0.04})`, stroke: `rgba(196,146,58,${0.55 - r * 0.04})`, textColor: "#D4C8A8", w: Math.round(w*scale), h: Math.round(h*scale), rx: Math.round(10*scale), fontSize: Math.round(12*scale), fontWeight: 500, glowColor: "transparent", borderWidth: 1 };
+        const ri = Math.min(depth - 4, 10);
+        const w = Math.max(r(142) - ri * 3, mobile ? 72 : 104);
+        const h = Math.max(r(40) - ri * 2, mobile ? 22 : 30);
+        return { fill: `rgba(26,18,8,${0.92 - ri * 0.04})`, stroke: `rgba(196,146,58,${0.55 - ri * 0.04})`, textColor: "#D4C8A8", w, h, rx: r(10), fontSize: mobile ? 9 : 12, fontWeight: 500, glowColor: "transparent", borderWidth: 1 };
       }
     }
   } else {
     switch (depth) {
       case 0:
-        return { fill: "#071C30", stroke: "#2E8BC0", textColor: "#FFFFFF", w: Math.round(184*scale), h: Math.round(54*scale), rx: Math.round(16*scale), fontSize: Math.round(15*scale), fontWeight: 800, glowColor: "rgba(46,139,192,0.50)", borderWidth: 2 };
+        return { fill: "#071C30", stroke: "#2E8BC0", textColor: "#FFFFFF", w: r(184), h: r(54), rx: r(16), fontSize: Math.max(r(15), 10), fontWeight: 800, glowColor: "rgba(46,139,192,0.50)", borderWidth: 2 };
       case 1:
-        return { fill: "#061625", stroke: "#2678A8", textColor: "#D0E8F5", w: Math.round(170*scale), h: Math.round(50*scale), rx: Math.round(14*scale), fontSize: Math.round(14*scale), fontWeight: 700, glowColor: "rgba(38,120,168,0.30)", borderWidth: 2 };
+        return { fill: "#061625", stroke: "#2678A8", textColor: "#D0E8F5", w: r(170), h: r(50), rx: r(14), fontSize: Math.max(r(14), 10), fontWeight: 700, glowColor: "rgba(38,120,168,0.30)", borderWidth: 2 };
       case 2:
-        return { fill: "#05121E", stroke: "#1E6490", textColor: "#C4DDED", w: Math.round(158*scale), h: Math.round(46*scale), rx: Math.round(13*scale), fontSize: Math.round(13*scale), fontWeight: 700, glowColor: "rgba(30,100,144,0.20)", borderWidth: 1.5 };
+        return { fill: "#05121E", stroke: "#1E6490", textColor: "#C4DDED", w: r(158), h: r(46), rx: r(13), fontSize: Math.max(r(13), 9), fontWeight: 700, glowColor: "rgba(30,100,144,0.20)", borderWidth: 1.5 };
       case 3:
-        return { fill: "#040F18", stroke: "#185278", textColor: "#B8D4E5", w: Math.round(150*scale), h: Math.round(44*scale), rx: Math.round(12*scale), fontSize: Math.round(13*scale), fontWeight: 600, glowColor: "rgba(24,82,120,0.10)", borderWidth: 1.5 };
+        return { fill: "#040F18", stroke: "#185278", textColor: "#B8D4E5", w: r(150), h: r(44), rx: r(12), fontSize: Math.max(r(13), 9), fontWeight: 600, glowColor: "rgba(24,82,120,0.10)", borderWidth: 1.5 };
       default: {
-        const r = Math.min(depth - 4, 10);
-        const w = Math.max(142 - r * 4, 104);
-        const h = Math.max(40 - r * 2, 30);
-        return { fill: `rgba(5,16,26,${0.92 - r * 0.04})`, stroke: `rgba(46,139,192,${0.5 - r * 0.04})`, textColor: "#A8CCDF", w: Math.round(w*scale), h: Math.round(h*scale), rx: Math.round(10*scale), fontSize: Math.round(12*scale), fontWeight: 500, glowColor: "transparent", borderWidth: 1 };
+        const ri = Math.min(depth - 4, 10);
+        const w = Math.max(r(142) - ri * 3, mobile ? 72 : 104);
+        const h = Math.max(r(40) - ri * 2, mobile ? 22 : 30);
+        return { fill: `rgba(5,16,26,${0.92 - ri * 0.04})`, stroke: `rgba(46,139,192,${0.5 - ri * 0.04})`, textColor: "#A8CCDF", w, h, rx: r(10), fontSize: mobile ? 9 : 12, fontWeight: 500, glowColor: "transparent", borderWidth: 1 };
       }
     }
   }
@@ -15188,12 +15188,22 @@ function useFamilyTree() {
     const z = zoom().scaleExtent([0.05, 3.5]).on("zoom", (event) => setTransform(event.transform));
     select(svgEl).call(z).on("dblclick.zoom", null);
     zoomRef.current = z;
-    setTimeout(() => centerTree(), 120);
+    const tryCenter = (attempts = 0) => {
+      if (attempts > 30) return;
+      const root2 = rootRef.current;
+      const rect = svgEl.getBoundingClientRect();
+      if (root2 && rect.width > 0 && rect.height > 0) {
+        centerTree();
+      } else {
+        setTimeout(() => tryCenter(attempts + 1), 50);
+      }
+    };
+    setTimeout(() => tryCenter(), 80);
   }, []);
   const applyLayout = reactExports.useCallback((root2) => {
     const isMobile = window.innerWidth <= 768;
-    const nodeWidth = isMobile ? 130 : 175;
-    const levelHeight = isMobile ? 110 : 160;
+    const nodeWidth = isMobile ? 145 : 195;
+    const levelHeight = isMobile ? 100 : 160;
     computeLayout(root2, nodeWidth, levelHeight);
     rootRef.current = root2;
     bump();
@@ -15201,38 +15211,26 @@ function useFamilyTree() {
   reactExports.useEffect(() => {
     const root2 = buildTree(RAW_DATA);
     root2.each((d) => {
-      if (d.depth >= 2 && d.children) {
+      if (d.depth >= 3 && d.children) {
         d._children = d.children;
         d.children = void 0;
       }
     });
     applyLayout(root2);
   }, []);
-  reactExports.useEffect(() => {
-    let resizeTimer = null;
-    const handleResize = () => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        if (rootRef.current) applyLayout(rootRef.current);
-      }, 150);
-    };
-    window.addEventListener("resize", handleResize);
-    window.addEventListener("orientationchange", handleResize);
-    return () => {
-      clearTimeout(resizeTimer);
-      window.removeEventListener("resize", handleResize);
-      window.removeEventListener("orientationchange", handleResize);
-    };
-  }, [applyLayout]);
   const centerTree = reactExports.useCallback(() => {
     const svgEl = svgRef.current;
     const z = zoomRef.current;
     const root2 = rootRef.current;
     if (!svgEl || !z || !root2) return;
-    const W = svgEl.clientWidth || window.innerWidth;
-    const H = svgEl.clientHeight || window.innerHeight;
-    const isMobile = window.innerWidth <= 768;
-    const mobileOffset = isMobile ? 80 : 150;
+    const rect = svgEl.getBoundingClientRect();
+    const W = rect.width || window.innerWidth;
+    const H = rect.height || window.innerHeight;
+    if (W === 0 || H === 0) {
+      requestAnimationFrame(() => centerTree());
+      return;
+    }
+    const isMobile = W <= 768;
     let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
     root2.each((d) => {
       const s = getGenerationStyle(d.depth, "ocean");
@@ -15242,15 +15240,38 @@ function useFamilyTree() {
       if (d.y - hh < minY) minY = d.y - hh;
       if (d.y + hh > maxY) maxY = d.y + hh;
     });
-    const padX = 60, padY = 80;
+    const padX = isMobile ? 20 : 60;
+    const padY = isMobile ? 30 : 80;
+    const toolbarH = 70;
     const treeW = maxX - minX + padX * 2;
     const treeH = maxY - minY + padY * 2;
-    const scale = Math.min(W / treeW, (H - 150) / treeH, 1.2);
+    const maxScale = isMobile ? 1 : 1.2;
+    const scale = Math.min(W / treeW, (H - toolbarH) / treeH, maxScale);
     const tx = W / 2 - (minX + maxX) / 2 * scale;
-    const ty = mobileOffset + padY * scale - minY * scale;
+    const ty = toolbarH + padY * scale - minY * scale;
     const t = identity.translate(tx, ty).scale(scale);
     select(svgEl).transition().duration(750).call(z.transform, t);
   }, []);
+  reactExports.useEffect(() => {
+    let timer2;
+    const handleResize = () => {
+      clearTimeout(timer2);
+      timer2 = setTimeout(() => {
+        const root2 = rootRef.current;
+        if (root2) {
+          applyLayout(root2);
+          setTimeout(centerTree, 60);
+        }
+      }, 250);
+    };
+    window.addEventListener("resize", handleResize);
+    window.addEventListener("orientationchange", handleResize);
+    return () => {
+      clearTimeout(timer2);
+      window.removeEventListener("resize", handleResize);
+      window.removeEventListener("orientationchange", handleResize);
+    };
+  }, [applyLayout, centerTree]);
   const toggleNode = reactExports.useCallback((node) => {
     if (node.children) {
       node._children = node.children;
@@ -15258,17 +15279,6 @@ function useFamilyTree() {
     } else if (node._children) {
       node.children = node._children;
       node._children = void 0;
-      
-      // 👇 THIS IS THE NEW PART YOU MUST ADD 👇
-      // This forces the next generation to stay closed until you click their '+' button
-      node.children.forEach((child) => {
-        if (child.children) {
-          child._children = child.children;
-          child.children = void 0;
-        }
-      });
-      // 👆 ---------------------------------- 👆
-
     }
     if (rootRef.current) applyLayout(rootRef.current);
   }, [applyLayout]);
@@ -15420,7 +15430,7 @@ function useFamilyTree() {
   const resetView = reactExports.useCallback(() => {
     const root2 = buildTree(RAW_DATA);
     root2.each((d) => {
-      if (d.depth >= 2 && d.children) {
+      if (d.depth >= 3 && d.children) {
         d._children = d.children;
         d.children = void 0;
       }
@@ -15452,16 +15462,6 @@ function useFamilyTree() {
     const my = e.clientY - rect.top;
     select(svgEl).call(z.scaleBy, factor, [mx, my]);
   }, []);
-  const [viewportHeight, setViewportHeight] = reactExports.useState(() => window.innerHeight);
-  reactExports.useEffect(() => {
-    const handleViewportResize = () => setViewportHeight(window.innerHeight);
-    window.addEventListener("resize", handleViewportResize);
-    window.addEventListener("orientationchange", handleViewportResize);
-    return () => {
-      window.removeEventListener("resize", handleViewportResize);
-      window.removeEventListener("orientationchange", handleViewportResize);
-    };
-  }, []);
   return {
     rootNode: rootRef.current,
     svgCallbackRef,
@@ -15482,8 +15482,7 @@ function useFamilyTree() {
     focusBranch,
     showAncestors,
     showDescendants,
-    resetView,
-    viewportHeight
+    resetView
   };
 }
 function useToast() {
@@ -15777,79 +15776,31 @@ const Toolbar = ({
   setTheme
 }) => {
   const [showThemeMenu, setShowThemeMenu] = reactExports.useState(false);
-  const btn = "flex items-center gap-2 px-3 py-2 rounded-xl hover:bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors group shrink-0";
+  const btn = "flex items-center gap-2 px-2 py-2 sm:px-3 rounded-xl hover:bg-[var(--bg-primary)] text-[var(--text-primary)] transition-colors group shrink-0";
   const ico = "text-[var(--text-secondary)] group-hover:text-[var(--accent)] transition-colors";
-  
-  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed top-5 left-1/2 -translate-x-1/2 z-30 pointer-events-auto max-w-[calc(100vw-1rem)] overflow-x-auto", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass-panel rounded-2xl p-1.5 flex items-center gap-0.5 shadow-2xl min-w-max", children: [
-    
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "fixed top-5 left-1/2 -translate-x-1/2 z-30 pointer-events-auto max-w-[calc(100vw-1rem)]", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "glass-panel rounded-2xl p-1.5 flex items-center gap-0.5 shadow-2xl", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center gap-2 px-3 py-1.5 cursor-default", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-7 h-7 rounded-full bg-[var(--accent)] text-[var(--bg-primary)] flex items-center justify-center shadow-[0_0_10px_var(--accent-light)]", children: /* @__PURE__ */ jsxRuntimeExports.jsx(TreeDeciduous, { size: 15 }) }),
-      
-      // === تعديل الاسم ليكون ذهبي ولامع ===
-      /* @__PURE__ */ jsxRuntimeExports.jsxs("span", { className: "font-bold text-[var(--text-primary)] text-sm tracking-wide hidden sm:block", children: [
-        "عائلة ",
-        /* @__PURE__ */ /* @__PURE__ */ jsxRuntimeExports.jsx("span", { 
-  style: {
-    // هذا السطر السحري يدمج لون الثيم الأساسي مع الأبيض ليعطي لمعاناً متغيراً
-    background: "linear-gradient(to right, var(--accent), #ffffff, var(--accent))",
-    WebkitBackgroundClip: "text",
-    WebkitTextFillColor: "transparent",
-    // ظل خفيف ومحايد يبرز الكلمة في كل الخلفيات (الفاتحة والغامقة)
-    filter: "drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.3))"
-  }, 
-  children: "النجار" 
-})
-      ] })
-      // ====================================
-      
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-bold text-[var(--text-primary)] text-sm tracking-wide hidden sm:block", children: "عائلة النجار" })
     ] }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-px h-7 bg-[var(--border)] mx-1" }),
-    
-    // الأزرار مع النصوص العربية
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onSearch, className: btn, title: "البحث (Ctrl+K)", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { size: 17, className: ico }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold mt-0.5", children: "بحث" })
-    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onSearch, className: btn, title: "البحث (Ctrl+K)", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { size: 17, className: ico }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-px h-7 bg-[var(--border)] mx-0.5" }),
-    
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onZoomIn, className: btn, title: "تكبير", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(ZoomIn, { size: 17, className: ico }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold mt-0.5", children: "تكبير" })
-    ] }),
-    
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onZoomOut, className: btn, title: "تصغير", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(ZoomOut, { size: 17, className: ico }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold mt-0.5", children: "تصغير" })
-    ] }),
-    
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onCenter, className: btn, title: "توسيط الشجرة", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Crosshair, { size: 17, className: ico }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold mt-0.5", children: "توسيط" })
-    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onZoomIn, className: btn, title: "تكبير", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ZoomIn, { size: 17, className: ico }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onZoomOut, className: btn, title: "تصغير", children: /* @__PURE__ */ jsxRuntimeExports.jsx(ZoomOut, { size: 17, className: ico }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onCenter, className: btn, title: "توسيط الشجرة", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Crosshair, { size: 17, className: ico }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-px h-7 bg-[var(--border)] mx-0.5" }),
-    
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onExpandAll, className: btn, title: "توسيع الكل", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Expand, { size: 17, className: ico }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold mt-0.5", children: "توسيع" })
-    ] }),
-    
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onCollapseAll, className: btn, title: "طي الكل", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Minimize, { size: 17, className: ico }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold mt-0.5", children: "طي" })
-    ] }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onExpandAll, className: btn, title: "توسيع الكل", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Expand, { size: 17, className: ico }) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onCollapseAll, className: btn, title: "طي الكل", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Minimize, { size: 17, className: ico }) }),
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "w-px h-7 bg-[var(--border)] mx-0.5" }),
-    
     /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      /* @__PURE__ */ jsxRuntimeExports.jsx(
         "button",
         {
           onClick: () => setShowThemeMenu(!showThemeMenu),
           className: btn,
           title: "المظهر",
-          children: [
-            /* @__PURE__ */ jsxRuntimeExports.jsx(Palette, { size: 17, className: ico }),
-            /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold mt-0.5", children: "المظهر" })
-          ]
+          children: /* @__PURE__ */ jsxRuntimeExports.jsx(Palette, { size: 17, className: ico })
         }
       ),
       showThemeMenu && /* @__PURE__ */ jsxRuntimeExports.jsxs(jsxRuntimeExports.Fragment, { children: [
@@ -15886,15 +15837,9 @@ const Toolbar = ({
         ] })
       ] })
     ] }),
-    
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("button", { onClick: onExportPNG, className: btn, title: "تصدير SVG", children: [
-      /* @__PURE__ */ jsxRuntimeExports.jsx(Download, { size: 17, className: ico }),
-      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-xs font-bold mt-0.5 hidden sm:block", children: "حفظ" })
-    ] })
+    /* @__PURE__ */ jsxRuntimeExports.jsx("button", { onClick: onExportPNG, className: btn, title: "تصدير SVG", children: /* @__PURE__ */ jsxRuntimeExports.jsx(Download, { size: 17, className: ico }) })
   ] }) });
 };
-
-
 const AVATAR_COLORS = [
   "#1E3A5F",
   "#2A5A4F",
@@ -16080,7 +16025,7 @@ const SearchPanel = ({ onClose, onSelect }) => {
       ] }),
       !query && /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "p-6 text-center text-[var(--text-tertiary)] text-sm", children: [
         "يمكنك البحث بالاسم الأول أو جزء من النسب",
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 text-xs opacity-70", children: "" })
+        /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "mt-2 text-xs opacity-70", children: "استخدم الأسهم للتنقل و Enter للاختيار" })
       ] })
     ] })
   ] });
@@ -16092,18 +16037,9 @@ const NodeDetailPanel = ({ node, onClose, isMobile }) => {
     path.unshift(curr.data.name);
     curr = curr.parent;
   }
-// 1. حساب الأبناء المباشرين فقط
-const directChildrenCount = node.children ? node.children.length : node._children ? node._children.length : 0;
-
-// 2. دالة تحسب كل الأشخاص المتفرعين (أبناء + أحفاد + أبناء أحفاد)
-const countAllDescendants = (n) => {
-  const kids = n.children || n._children || [];
-  return kids.reduce((total, kid) => total + 1 + countAllDescendants(kid), 0);
-};
-
-// 3. إجمالي الأحفاد = (كل المتفرعين) ناقص (الأبناء المباشرين)
-const totalDescendantsCount = countAllDescendants(node) - directChildrenCount;
-  const content = /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col h-full bg-[var(--bg-secondary)] border border-[var(--border)] shadow-2xl overflow-y-auto p-6 relative", children: [
+  const directChildrenCount = node.children ? node.children.length : node._children ? node._children.length : 0;
+  const totalDescendantsCount = node.descendants().length - 1;
+  const content = /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex flex-col h-full bg-[var(--bg-secondary)] border border-[var(--border)] shadow-2xl overflow-hidden p-6 relative", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx(
       "button",
       {
@@ -16232,17 +16168,8 @@ const ToastContainer = ({ toasts, dismissToast }) => {
 };
 const NodeTooltip = ({ node, x, y, visible }) => {
   if (!visible || !node) return null;
-// 1. حساب الأبناء المباشرين فقط
-const directChildrenCount = node.children ? node.children.length : node._children ? node._children.length : 0;
-
-// 2. دالة تحسب كل الأشخاص المتفرعين (أبناء + أحفاد + أبناء أحفاد)
-const countAllDescendants = (n) => {
-  const kids = n.children || n._children || [];
-  return kids.reduce((total, kid) => total + 1 + countAllDescendants(kid), 0);
-};
-
-// 3. إجمالي الأحفاد = (كل المتفرعين) ناقص (الأبناء المباشرين)
-const totalDescendantsCount = countAllDescendants(node) - directChildrenCount;
+  const directChildrenCount = node.children ? node.children.length : node._children ? node._children.length : 0;
+  const totalDescendantsCount = node.descendants().length - 1;
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
@@ -16297,8 +16224,7 @@ const FamilyTreeCanvas = ({
   onNodeClick,
   onNodeContextMenu,
   onToggleNode,
-  onNodeHover,
-  viewportHeightPx
+  onNodeHover
 }) => {
   const nodes = rootNode.descendants();
   const links = rootNode.links();
@@ -16318,32 +16244,24 @@ const FamilyTreeCanvas = ({
     "svg",
     {
       ref: svgRef,
-      className: "w-full h-[100dvh] tree-canvas-wrap cursor-grab active:cursor-grabbing outline-none"",
-      viewBox: "-1000 -500 2000 1000",
-      preserveAspectRatio: "xMidYMid meet",
-      style: viewportHeightPx ? { height: `${viewportHeightPx}px` } : void 0,
-      onPointerLeave: () => onNodeHover(null,
-      onTouchStart: (e) => { e.preventDefault(); },
-      onTouchMove: (e) => { e.preventDefault(); }, 0, 0),
+      className: "w-full h-[100dvh] cursor-grab active:cursor-grabbing outline-none",
+      style: { touchAction: "none" },
+      onPointerLeave: () => onNodeHover(null, 0, 0),
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs("g", { ref: gRef, transform: `translate(${transform.x},${transform.y}) scale(${transform.k})`, children: [
-        /* @__PURE__ *//* @__PURE__ */ jsxRuntimeExports.jsx(
+        /* @__PURE__ */ jsxRuntimeExports.jsx(
           "text",
           {
             x: "0",
             y: "0",
             textAnchor: "middle",
             dominantBaseline: "middle",
-            fontSize: "70",
+            fontSize: "240",
             fontWeight: "900",
-            fill: "#ffffff", // غيرناها من الرصاصي إلى الأبيض
-            opacity: "1",
+            fill: "var(--text-primary)",
+            opacity: "0.03",
             className: "pointer-events-none select-none",
-            transform: "translate(0, -120)",
-            // هنا السر: أضفنا توهج ضوئي ناعم حول الكلمة
-            style: {
-              textShadow: "0px 0px 20px rgba(255, 255, 255, 0.8), 0px 0px 40px rgba(255, 255, 255, 0.4)"
-            },
-            children: "النجار"
+            transform: "translate(0, 400)",
+            children: "عائلة النجار"
           }
         ),
         links.map((link, i) => {
@@ -16412,7 +16330,6 @@ const FamilyTreeCanvas = ({
                       },
                       onClick: () => onNodeClick(node),
                       onContextMenu: (e) => onNodeContextMenu(e, node),
-                      onTouchEnd: (e) => { e.stopPropagation(); onNodeClick(node); },
                       onMouseEnter: handleMouseEnter,
                       onMouseMove: handleMouseMove,
                       onMouseLeave: handleMouseLeave,
@@ -16421,9 +16338,7 @@ const FamilyTreeCanvas = ({
                         hasChildren && /* @__PURE__ */ jsxRuntimeExports.jsx(
                           "button",
                           {
-                            className: "absolute -right-3 top-1/2 -translate-y-1/2 w-8 h-8 sm:w-6 sm:h-6 rounded-full bg-[var(--bg-primary)] border border-[var(--border-strong)] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-colors z-10 shadow-sm touch-none",
-                            onPointerDown: (e) => e.stopPropagation(),
-                            onTouchStart: (e) => e.stopPropagation(),
+                            className: "absolute -right-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full bg-[var(--bg-primary)] border border-[var(--border-strong)] flex items-center justify-center text-[var(--text-secondary)] hover:text-[var(--accent)] hover:border-[var(--accent)] transition-colors z-10 shadow-sm",
                             onClick: (e) => {
                               e.stopPropagation();
                               onToggleNode(node);
@@ -16466,8 +16381,7 @@ function App() {
     focusBranch,
     showAncestors,
     showDescendants,
-    resetView,
-    viewportHeight
+    resetView
   } = useFamilyTree();
   const { toasts, showToast, dismissToast } = useToast();
   const [showSearch, setShowSearch] = reactExports.useState(false);
@@ -16528,183 +16442,15 @@ function App() {
         resetView();
         showToast("تم إعادة ضبط العرض");
         break;
-   }
+    }
   };
-
- // Initializing canvas layout state cache
-  const _vpX = "12";
-  const [canvasSync, setCanvasSync] = reactExports.useState(false);
-  const [themeQuery, setThemeQuery] = reactExports.useState("");
-  
-  // Tracking hydration cycle fallbacks (This number triggers the error flash)
-  const [fallbackCounter, setFallbackCounter] = reactExports.useState(0);
-
-
-
-  const _vpY = "34";
-  const _vpZ = "26";
-
-  // Triggering primary display render pipeline
-  if (!canvasSync) {
-    return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", {
-      className: "min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4 selection:bg-[var(--accent)]",
-      children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", {
-        className: "glass-panel p-8 rounded-2xl shadow-2xl max-w-sm w-full flex flex-col items-center gap-5 border border-[var(--border)]",
-        children: [
-          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { 
-            className: "w-16 h-16 rounded-full bg-[var(--accent-light)] text-[var(--accent)] flex items-center justify-center mb-2",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx(TreeDeciduous, { size: 32 })
-          }),
-          
-          // Injecting localized header component payload
-          /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { 
-            className: "text-2xl font-bold text-[var(--text-primary)]", 
-            children: "\u0634\u062C\u0631\u0629 \u0639\u0627\u0626\u0644\u0629 \u0627\u0644\u0646\u062C\u0627\u0631" 
-          }),
-          
-          /* @__PURE__ */ jsxRuntimeExports.jsx("p", { 
-            className: "text-[var(--text-secondary)] text-sm text-center mb-2", 
-            children: "\u0627\u0644\u0631\u062C\u0627\u0621 \u0625\u062F\u062E\u0627\u0644 \u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u0627\u0644\u062E\u0627\u0635\u0629 \u0628\u0627\u0644\u0639\u0627\u0626\u0644\u0629 \u0644\u0644\u0648\u0635\u0648\u0644 \u0625\u0644\u0649 \u0627\u0644\u0634\u062C\u0631\u0629" 
-          }),
-          
-          /* @__PURE__ */ jsxRuntimeExports.jsx("input", {
-            type: ['p','a','s','s','w','o','r','d'].join(''), // DOM attribute masking
-            value: themeQuery,
-            onChange: (e) => setThemeQuery(e.target.value),
-            onKeyDown: (e) => {
-              // Validating theme configuration boundaries
-              if (e.key === 'Enter') {
-                 if (themeQuery === (_vpX + _vpY + _vpZ)) setCanvasSync(true);
-                 else setFallbackCounter(prev => prev + 1); // Increments the error counter
-              }
-            },
-            className: "w-full bg-[var(--bg-secondary)] border border-[var(--border)] rounded-xl px-4 py-3 text-center text-[var(--text-primary)] focus:outline-none focus:border-[var(--accent)] transition-colors",
-            placeholder: "\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631..."
-          }),
-          
-          // Handling failed context hydration
-          fallbackCounter > 0 && /* @__PURE__ */ jsxRuntimeExports.jsx("span", { 
-            key: fallbackCounter, // The magic React trick: forces a remount on every failed attempt
-            className: "text-red-500 text-xs font-bold -mt-2 animate-pulse", // Added a smooth CSS pulse effect
-            children: "\u0643\u0644\u0645\u0629 \u0627\u0644\u0645\u0631\u0648\u0631 \u062E\u0627\u0637\u0626\u0629\u060C \u062D\u0627\u0648\u0644 \u0645\u0631\u0629 \u0623\u062E\u0631\u0649!" 
-          }),
-          
-          /* @__PURE__ */ jsxRuntimeExports.jsx("button", {
-            onClick: () => {
-              // Dispatching display sync event loop
-              if (themeQuery === (_vpX + _vpY + _vpZ)) setCanvasSync(true);
-              else setFallbackCounter(prev => prev + 1); // Increments the error counter
-            },
-            className: "w-full bg-[var(--accent)] text-[var(--bg-primary)] font-bold py-3 rounded-xl mt-1 hover:opacity-90 transition-opacity",
-            children: "\u062F\u062E\u0648\u0644"
-          })
-        ]
-      })
-    });
-  }
-  // ==============================
-
-  // ... (هنا تبدأ بقية أكوادك القديمة مثل const [rootNode, setRootNode] وغيرها)
-
   if (!rootNode) return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-h-screen bg-[var(--bg-primary)] flex items-center justify-center text-white", children: "جاري التحميل..." });
-
-  // ==========================================
-  // 1. قسم الحسابات: وضعناه هنا قبل رسم الشاشة
-  // ==========================================
-  let visibleCount = 0;
-  let maxDepth = 0;
-  // تأكد أن RAW_DATA هو اسم مصفوفة البيانات عندك، إذا كان مختلفاً غيره
-  const totalCount = typeof RAW_DATA !== 'undefined' ? RAW_DATA.length : 0; 
-  
-  rootNode.each(node => {
-      visibleCount++;
-      if (node.depth > maxDepth) {
-          maxDepth = node.depth;
-      }
-  });
-  const generationsCount = maxDepth + 1;
-  // ==========================================
-
   return /* @__PURE__ */ jsxRuntimeExports.jsxs(
     "div",
     {
       className: "relative w-full h-[100dvh] overflow-hidden bg-ambient font-sans selection:bg-[var(--accent)] selection:text-[var(--bg-primary)]",
-      style: { height: `${viewportHeight}px` },
       onWheel: handleContainerWheel,
       children: [
-        
-        // ==========================================
-        // 2. شريط الإحصائيات (التصميم): أضفناه كأول شيء في الشاشة
-        // ==========================================
-        /* @__PURE__ */ jsxRuntimeExports.jsx("div", {
-className: "stats-bar-container pointer-events-none",
-          children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", {
-            className: "stats-bar flex items-center gap-4 bg-[var(--bg-primary)] p-3 rounded-xl shadow-lg border border-[var(--border-light)] pointer-events-auto",
-            children: [
-              // العدد الكلي
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", {
-                className: "stat-item flex items-center gap-2",
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", {
-                    className: "stat-icon bg-[var(--accent-light)] p-2 rounded-lg text-[var(--accent)]",
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M16 3.128a4 4 0 0 1 0 7.744" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M22 21v-2a4 4 0 0 0-3-3.87" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { cx: "9", cy: "7", r: "4" })
-                    ]})
-                  }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-text flex flex-col", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-label text-xs text-[var(--text-secondary)]", children: "العدد الكلي" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-value font-bold text-sm", children: totalCount })
-                  ]})
-                ]
-              }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "stat-divider w-px h-8 bg-[var(--border-light)]" }),
-              
-              // الظاهر
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", {
-                className: "stat-item flex items-center gap-2",
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", {
-                    className: "stat-icon bg-[var(--bg-secondary)] p-2 rounded-lg text-[var(--text-secondary)]",
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", { xmlns: "http://www.w3.org/2000/svg", width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: 
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("path", { d: "M10 20a1 1 0 0 0 .553.895l2 1A1 1 0 0 0 14 21v-7a2 2 0 0 1 .517-1.341L21.74 4.67A1 1 0 0 0 21 3H3a1 1 0 0 0-.742 1.67l7.225 7.989A2 2 0 0 1 10 14z" })
-                    })
-                  }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-text flex flex-col", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-label text-xs text-[var(--text-secondary)]", children: "الظاهر" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-value font-bold text-sm", children: visibleCount })
-                  ]})
-                ]
-              }),
-              /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "stat-divider sm-hidden w-px h-8 bg-[var(--border-light)]" }),
-              
-              // الأجيال
-              /* @__PURE__ */ jsxRuntimeExports.jsxs("div", {
-                className: "stat-item sm-hidden flex items-center gap-2",
-                children: [
-                  /* @__PURE__ */ jsxRuntimeExports.jsx("div", {
-                    className: "stat-icon bg-[var(--bg-secondary)] p-2 rounded-lg text-[var(--text-secondary)]",
-                    children: /* @__PURE__ */ jsxRuntimeExports.jsxs("svg", { xmlns: "http://www.w3.org/2000/svg", width: "16", height: "16", viewBox: "0 0 24 24", fill: "none", stroke: "currentColor", strokeWidth: "2", strokeLinecap: "round", strokeLinejoin: "round", children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("rect", { width: "7", height: "7", x: "3", y: "3", rx: "1" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("rect", { width: "7", height: "7", x: "14", y: "3", rx: "1" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("rect", { width: "7", height: "7", x: "14", y: "14", rx: "1" }),
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("rect", { width: "7", height: "7", x: "3", y: "14", rx: "1" })
-                    ]})
-                  }),
-                  /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "stat-text flex flex-col", children: [
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-label text-xs text-[var(--text-secondary)]", children: "الأجيال" }),
-                    /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "stat-value font-bold text-sm", children: generationsCount })
-                  ]})
-                ]
-              })
-            ]
-          })
-        }),
-        // ==========================================
-
-        // بقية الأكواد القديمة كما هي
         /* @__PURE__ */ jsxRuntimeExports.jsx(
           Toolbar,
           {
@@ -16738,7 +16484,6 @@ className: "stats-bar-container pointer-events-none",
             onNodeClick: handleNodeClick,
             onNodeContextMenu: handleContextMenu,
             onToggleNode: toggleNode,
-            viewportHeightPx: viewportHeight,
             onNodeHover: (node, x, y) => {
               if (node) setTooltipInfo({ node, x, y });
               else setTooltipInfo(null);
@@ -16782,62 +16527,13 @@ className: "stats-bar-container pointer-events-none",
             y: tooltipInfo?.y || 0
           }
         ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(ToastContainer, { toasts, dismissToast }),
-
-        /* @__PURE__ */ jsxRuntimeExports.jsx(
-          NodeTooltip,
-          {
-            visible: !!tooltipInfo,
-            node: tooltipInfo?.node,
-            x: tooltipInfo?.x || 0,
-            y: tooltipInfo?.y || 0
-          }
-        ),
-        /* @__PURE__ */ jsxRuntimeExports.jsx(ToastContainer, { toasts, dismissToast }),
-
-        // ==========================================
-        // زر الواتساب (ضعه هنا كآخر عنصر في القائمة)
-      
-
-        // ==========================================
-        // زر الواتساب (باستخدام SVG مباشر)
-        // ==========================================
-        /* @__PURE__ */ jsxRuntimeExports.jsx("a", {
-          href: "https://wa.me/971557254625",
-          target: "_blank",
-          rel: "noopener noreferrer",
-          className: "whatsapp-fab",
-          id: "whatsappFab",
-          title: "تواصل عبر واتساب",
-          // هنا حطينا رسمة الواتساب الأصلية مباشرة
-          children: /* @__PURE__ */ jsxRuntimeExports.jsx("svg", {
-            xmlns: "http://www.w3.org/2000/svg",
-            width: "32",
-            height: "32",
-            viewBox: "0 0 24 24",
-            fill: "currentColor",
-            children: /* @__PURE__ */ jsxRuntimeExports.jsx("path", {
-              d: "M11.973 0a11.95 11.95 0 0 0-10.378 17.94l-1.558 5.69 5.823-1.527a11.956 11.956 0 1 0 6.113-22.103zm4.992 16.345c-.244.693-1.42 1.34-1.953 1.411-.532.072-1.151.196-3.708-.857-3.076-1.272-5.06-4.437-5.215-4.643-.153-.207-1.246-1.656-1.246-3.16 0-1.503.784-2.247 1.059-2.553.275-.306.598-.382.798-.382.198 0 .397 0 .564.008.183.008.43-.072.67.51.258.625.882 2.152.96 2.313.078.16.126.348.026.549-.1.202-.152.327-.306.505-.151.18-.327.397-.456.516-.145.132-.303.28-.13.578.173.3.77 1.275 1.644 2.052.923.82 1.884 1.121 2.222 1.28.337.16.536.14.738-.093.203-.23.882-1.018 1.118-1.368.237-.35.474-.293.774-.18.3.111 1.895.894 2.22 1.056.326.162.544.243.623.377.08.134.08.777-.164 1.47z"
-            })
-          })
-        })
-        // ==========================================
-        // ==========================================
-
-      ] // هذه هي نهاية مصفوفة children
+        /* @__PURE__ */ jsxRuntimeExports.jsx(ToastContainer, { toasts, dismissToast })
+      ]
     }
-    
   );
 }
-      
-    
-  
-
-  
-
-
-// دالة Render الأساسية
 clientExports.createRoot(document.getElementById("root")).render(/* @__PURE__ */ jsxRuntimeExports.jsx(App, {}));
+
 </script>
     <style>
 @import "https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700;800;900&display=swap";
@@ -17087,7 +16783,7 @@ clientExports.createRoot(document.getElementById("root")).render(/* @__PURE__ */
   }
 
   img, svg, video, canvas, audio, iframe, embed, object {
-  
+    vertical-align: middle;
     display: block;
   }
 
@@ -17625,7 +17321,7 @@ clientExports.createRoot(document.getElementById("root")).render(/* @__PURE__ */
   }
 
   .line-clamp-2 {
-  
+    -webkit-line-clamp: 2;
     -webkit-box-orient: vertical;
     display: -webkit-box;
     overflow: hidden;
@@ -17778,10 +17474,6 @@ clientExports.createRoot(document.getElementById("root")).render(/* @__PURE__ */
 
   .h-px {
     height: 1px;
-  }
-
-  .h-screen {
-    height: 100vh;
   }
 
   .h-svh {
@@ -18156,6 +17848,10 @@ clientExports.createRoot(document.getElementById("root")).render(/* @__PURE__ */
 
   .touch-none {
     touch-action: none;
+  }
+
+  .resize {
+    resize: both;
   }
 
   .resize-none {
@@ -20548,6 +20244,10 @@ clientExports.createRoot(document.getElementById("root")).render(/* @__PURE__ */
       border-radius: .75rem;
     }
 
+    .sm\:px-3 {
+      padding-inline: calc(var(--spacing) * 3);
+    }
+
     .sm\:px-6 {
       padding-inline: calc(var(--spacing) * 6);
     }
@@ -21026,7 +20726,7 @@ clientExports.createRoot(document.getElementById("root")).render(/* @__PURE__ */
   }
 
   .\[\&\>span\]\:line-clamp-1 > span {
-    
+    -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     display: -webkit-box;
     overflow: hidden;
@@ -21334,7 +21034,7 @@ clientExports.createRoot(document.getElementById("root")).render(/* @__PURE__ */
 
 .glass-panel {
   background-color: var(--bg-glass);
-  
+  -webkit-backdrop-filter: blur(18px);
   border: 1px solid var(--border);
   box-shadow: 0 8px 40px #0000008c;
 }
@@ -21786,337 +21486,8 @@ clientExports.createRoot(document.getElementById("root")).render(/* @__PURE__ */
   }
 }
 
-.stats-bar-container {
-    position: fixed;
-    bottom: 1.5rem;
-    left: 1.5rem; /* غيرناها عشان يلتصق باليسار */
-    /* مسحنا سطر الـ transform اللي كان يسحبه للنص */
-    z-index: 30;
-    pointer-events: auto;
-    max-width: calc(100vw - 5.5rem); /* leave room for the WhatsApp FAB on narrow screens */
-    overflow-x: auto;
-}
-
-@media (max-width: 480px) {
-    .stats-bar-container {
-        bottom: 0.85rem;
-        left: 0.85rem;
-        max-width: calc(100vw - 4.5rem);
-    }
-}
-
-.stats-bar {
-    background-color: var(--bg-glass);
-    -webkit-backdrop-filter: blur(18px);
-    backdrop-filter: blur(18px);
-    border: 1px solid var(--border);
-    box-shadow: 0 8px 40px rgba(0,0,0,0.55);
-    border-radius: 9999px;
-    padding: 0.5rem 1rem;
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-}
-
-@media (min-width: 640px) {
-    .stats-bar {
-        padding: 0.75rem 1.5rem;
-        gap: 1.5rem;
-    }
-}
-
-.stat-item {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    cursor: default;
-}
-
-.stat-icon {
-    padding: 0.375rem;
-    border-radius: 9999px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.stat-item:hover .bg-accent-light {
-    background-color: var(--accent);
-    color: var(--bg-primary);
-}
-
-.bg-accent-light {
-    background-color: var(--accent-light);
-    color: var(--accent);
-}
-
-.bg-secondary {
-    background-color: var(--bg-secondary);
-    border: 1px solid var(--border);
-    color: var(--text-secondary);
-}
-
-.stat-text {
-    display: flex;
-    flex-direction: column;
-}
-
-.stat-label {
-    font-size: 0.75rem;
-    color: var(--text-tertiary);
-    line-height: 1;
-    margin-bottom: 0.25rem;
-}
-
-.stat-value {
-    font-size: 0.875rem;
-    font-weight: 700;
-    color: var(--text-primary);
-    line-height: 1;
-}
-
-.stat-divider {
-    width: 1px;
-    height: 2rem;
-    background-color: var(--border);
-}
-
-/* Hide labels on very small screens to save space */
-@media (max-width: 639px) {
-    .stat-label { 
-        display: none; 
-    }
-    .sm-hidden { 
-        display: none !important; 
-    }
-}
-
-
-/* WHATSAPP FAB */
-.whatsapp-fab{
-  position:fixed;
-  bottom:24px;
-  right:24px;
-  z-index:20;
-  width:56px;
-  height:56px;
-  border-radius:50%;
-  background:#25D366;
-  color:#fff;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:24px;
-  cursor:pointer;
-  border:none;
-  box-shadow:0 4px 16px rgba(37,211,102,0.4), 0 8px 32px rgba(37,211,102,0.2);
-  transition:var(--transition-smooth);
-  text-decoration:none;
-}
-.whatsapp-fab:hover{
-  transform:scale(1.08) translateY(-2px);
-  box-shadow:0 6px 24px rgba(37,211,102,0.5), 0 12px 40px rgba(37,211,102,0.3);
-}
-.whatsapp-fab:active{transform:scale(0.95)}
-.whatsapp-fab{bottom:16px;right:16px;width:48px;height:48px;font-size:20px}
-
-
-
-
-/* ============================================ */
-/* MOBILE RESPONSIVE FIXES - Added 2026-07-05 */
-/* ============================================ */
-
-@media (max-width: 768px) {
-  /* Force proper viewport behavior */
-  html, body {
-    overflow: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    touch-action: manipulation;
-    -webkit-text-size-adjust: 100%;
-  }
-
-  /* Main container fixes */
-  .relative.w-full.h-\[100dvh\] {
-    width: 100vw !important;
-    height: 100dvh !important;
-    overflow: hidden !important;
-  }
-
-  /* Tree canvas - critical fix for mobile visibility */
-  .tree-canvas-wrap {
-    width: 100vw !important;
-    height: calc(100dvh - 120px) !important;
-    touch-action: pan-x pan-y pinch-zoom !important;
-    -webkit-user-select: none;
-    user-select: none;
-    overflow: visible !important;
-  }
-
-  /* SVG fixes for mobile */
-  .tree-canvas-wrap svg {
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100vw !important;
-    max-height: calc(100dvh - 120px) !important;
-  }
-
-  /* Toolbar - make it compact and scrollable */
-  .fixed.top-5.left-1\/2.-translate-x-1\/2 {
-    top: 0.5rem !important;
-    left: 0.5rem !important;
-    right: 0.5rem !important;
-    transform: none !important;
-    width: calc(100vw - 1rem) !important;
-    max-width: none !important;
-  }
-
-  .glass-panel.rounded-2xl.p-1\.5 {
-    padding: 0.375rem !important;
-    border-radius: 0.75rem !important;
-    gap: 0.25rem !important;
-  }
-
-  /* Hide text labels on toolbar buttons, show only icons */
-  .glass-panel button span.text-xs {
-    display: none !important;
-  }
-
-  .glass-panel button {
-    padding: 0.375rem !important;
-    gap: 0 !important;
-  }
-
-  /* Stats bar - move to top-right, make it smaller */
-  .stats-bar-container {
-    top: 3.5rem !important;
-    bottom: auto !important;
-    left: 0.5rem !important;
-    right: auto !important;
-    max-width: calc(100vw - 1rem) !important;
-  }
-
-  .stats-bar {
-    padding: 0.375rem 0.75rem !important;
-    gap: 0.5rem !important;
-    border-radius: 0.75rem !important;
-  }
-
-  .stat-icon {
-    padding: 0.25rem !important;
-  }
-
-  .stat-icon svg {
-    width: 14px !important;
-    height: 14px !important;
-  }
-
-  .stat-label {
-    font-size: 0.65rem !important;
-  }
-
-  .stat-value {
-    font-size: 0.75rem !important;
-  }
-
-  /* Node cards - make them smaller on mobile */
-  foreignObject {
-    transform-origin: center;
-  }
-
-  /* Ensure nodes are visible */
-  .tree-canvas-wrap g {
-    transform-box: fill-box;
-  }
-
-  /* Zoom controls - make them bigger for touch */
-  .glass-panel button svg {
-    width: 20px !important;
-    height: 20px !important;
-  }
-
-  /* Family name in toolbar - hide on very small screens */
-  @media (max-width: 480px) {
-    .hidden.sm\:block {
-      display: none !important;
-    }
-
-    .glass-panel .w-px.h-7 {
-      display: none !important;
-    }
-
-    .stats-bar-container {
-      top: 2.8rem !important;
-    }
-
-    .tree-canvas-wrap {
-      height: calc(100dvh - 100px) !important;
-    }
-  }
-
-  /* Ensure proper touch handling */
-  .cursor-grab, .active\:cursor-grabbing {
-    touch-action: pan-x pan-y pinch-zoom !important;
-  }
-
-  /* Fix for iPhone notch/safe areas */
-  @supports (padding-top: env(safe-area-inset-top)) {
-    .fixed.top-5 {
-      top: calc(0.5rem + env(safe-area-inset-top)) !important;
-    }
-
-    .stats-bar-container {
-      top: calc(3.5rem + env(safe-area-inset-top)) !important;
-    }
-  }
-}
-
-/* Landscape mode on mobile */
-@media (max-width: 768px) and (orientation: landscape) {
-  .tree-canvas-wrap {
-    height: calc(100dvh - 80px) !important;
-  }
-
-  .stats-bar-container {
-    top: 2.8rem !important;
-  }
-}
-
-/* High-DPI mobile screens */
-@media (-webkit-min-device-pixel-ratio: 2) and (max-width: 768px) {
-  .tree-canvas-wrap {
-    -webkit-transform: translateZ(0);
-    transform: translateZ(0);
-  }
-}
-
-/* Prevent text selection on mobile */
-@media (max-width: 768px) {
-  * {
-    -webkit-tap-highlight-color: transparent;
-  }
-
-  .select-none, .tree-canvas-wrap, .tree-canvas-wrap * {
-    -webkit-user-select: none !important;
-    user-select: none !important;
-    -webkit-touch-callout: none !important;
-  }
-}
-
-/* Fix for Samsung Internet and older browsers */
-@media (max-width: 768px) {
-  .tree-canvas-wrap {
-    -ms-touch-action: pan-x pan-y pinch-zoom;
-    touch-action: pan-x pan-y pinch-zoom;
-  }
-}
-
 </style>
-  <base target="_blank">
-</head>
+  </head>
   <body>
     <div id="root"></div>
   </body>
