@@ -15994,9 +15994,9 @@ const SearchPanel = ({ onClose, onSelect }) => {
     }, 120);
     return () => clearTimeout(timer2);
   }, [query]);
-  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "fixed inset-0 z-50 flex items-start justify-center pt-[10vh] px-4 pointer-events-none", dir: "rtl", children: [
+  return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "fixed inset-0 z-50 flex items-start justify-center pt-[10vh] px-0 pointer-events-none", dir: "rtl", children: [
     /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "absolute inset-0 bg-black/40 backdrop-blur-sm pointer-events-auto", onClick: onClose }),
-    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-full max-w-[560px] mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden pointer-events-auto flex flex-col animate-scale-in relative z-10 max-h-[80vh]", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "w-[calc(100vw-2rem)] max-w-[560px] mx-auto bg-[var(--bg-secondary)] border border-[var(--border)] rounded-2xl shadow-2xl overflow-hidden pointer-events-auto flex flex-col animate-scale-in relative z-10 max-h-[80vh]", children: [
       /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center px-4 py-3 border-b border-[var(--border)] bg-[var(--bg-primary)]", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsx(Search, { className: "text-[var(--text-secondary)] w-5 h-5 ml-3 shrink-0" }),
         /* @__PURE__ */ jsxRuntimeExports.jsx(
@@ -21921,68 +21921,105 @@ clientExports.createRoot(document.getElementById("root")).render(/* @__PURE__ */
 
 
 /* =========================================================
-   MOBILE RESPONSIVE FIXES — شجرة العائلة النجار
+   MOBILE RESPONSIVE FIXES v3 — شجرة العائلة النجار
    ========================================================= */
 
-/* ---- SVG text: Arabic font on all nodes ---- */
+/* ── SVG text Arabic font ─────────────────────────── */
 svg text {
   font-family: 'Noto Kufi Arabic', sans-serif;
   direction: rtl;
 }
-
-/* ---- Ensure SVG fills container on all mobile browsers ---- */
 svg.w-full {
   height: 100% !important;
   touch-action: none;
 }
 
-/* ---- Toolbar: compact icon-only on small phones ---- */
-@media (max-width: 600px) {
-  .glass-panel button > span,
-  .glass-panel button > span.font-bold {
-    display: none !important;
-  }
-  .glass-panel button {
-    padding: 6px 8px !important;
-    gap: 0 !important;
-    min-width: 36px;
-    justify-content: center;
-  }
-  .glass-panel.rounded-2xl {
-    gap: 2px !important;
-    padding: 6px !important;
-  }
+/* ── 1. TOOLBAR: hide scrollbar, smooth iOS swipe ─── */
+/* The outer toolbar wrapper already has overflow-x-auto.
+   We hide the scrollbar so it looks clean. */
+.toolbar-scroll-wrap {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+.toolbar-scroll-wrap::-webkit-scrollbar { display: none; }
+
+/* Target by attribute since class is long & dynamic */
+[class*="top-5"][class*="overflow-x-auto"] {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  -webkit-overflow-scrolling: touch;
+}
+[class*="top-5"][class*="overflow-x-auto"]::-webkit-scrollbar { display: none; }
+
+/* Ensure every toolbar button is at least 44×44px touch target */
+.glass-panel button {
+  min-height: 44px;
+  min-width: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* ---- Stats bar on mobile ---- */
-@media (max-width: 640px) {
-  .stats-bar-container {
-    bottom: 72px !important;
-    left: 0.5rem !important;
-    right: auto !important;
-  }
+/* ── 2. STATS BAR: permanently pinned full-width bottom bar ─ */
+.stats-bar-container {
+  position: fixed !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  width: 100% !important;
+  z-index: 40 !important;
+  pointer-events: auto !important;
+  /* safe-area for iOS home indicator & Android nav bar */
+  padding-bottom: env(safe-area-inset-bottom, 0px) !important;
+  background: transparent !important;
 }
 
-/* ---- WhatsApp FAB on mobile ---- */
-@media (max-width: 640px) {
-  .whatsapp-fab {
-    bottom: 12px !important;
-    right: 12px !important;
-    width: 46px !important;
-    height: 46px !important;
-  }
+.stats-bar {
+  border-radius: 0 !important;
+  border-top: 1px solid var(--border) !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+  width: 100% !important;
+  justify-content: center !important;
+  box-shadow: 0 -6px 24px rgba(0,0,0,0.45) !important;
+  padding: 10px 16px !important;
+  gap: 1.25rem !important;
+  background-color: var(--bg-primary) !important;
+  -webkit-backdrop-filter: blur(18px) !important;
+  backdrop-filter: blur(18px) !important;
 }
 
-/* ---- Prevent horizontal overflow ---- */
+/* Hide stat labels on very narrow screens, keep numbers */
+@media (max-width: 400px) {
+  .stat-label { display: none !important; }
+  .stats-bar { gap: 0.75rem !important; padding: 8px 12px !important; }
+}
+
+/* ── 3. WHATSAPP FAB: float above the bottom stats bar ─ */
+/* Stats bar is ~56px + safe-area. FAB sits 12px above it. */
+.whatsapp-fab {
+  position: fixed !important;
+  bottom: calc(68px + env(safe-area-inset-bottom, 0px)) !important;
+  right: 16px !important;
+  width: 48px !important;
+  height: 48px !important;
+  font-size: 20px !important;
+  z-index: 41 !important;
+}
+
+/* ── 4. SEARCH WINDOW: already uses calc(100vw-2rem) ─ */
+/* Extra safety: ensure results list scrolls on touch */
+.overflow-y-auto {
+  -webkit-overflow-scrolling: touch;
+}
+
+/* ── 5. General overflow protection ─────────────────── */
 html, body {
   overflow: hidden;
   width: 100%;
   max-width: 100vw;
-}
-
-/* ---- Touch scrolling in panels ---- */
-.overflow-y-auto {
-  -webkit-overflow-scrolling: touch;
 }
 </style>
   </head>
