@@ -16539,7 +16539,7 @@ function App() {
   // Triggering primary display render pipeline
   if (!canvasSync) {
     return /* @__PURE__ */ jsxRuntimeExports.jsxs("div", {
-      className: "min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-4 selection:bg-[var(--accent)]",
+      className: "min-h-screen bg-ambient flex items-center justify-center p-4 selection:bg-[var(--accent)]",
       children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", {
         className: "glass-panel p-8 rounded-2xl shadow-2xl max-w-sm w-full flex flex-col items-center gap-5 border border-[var(--border)]",
         children: [
@@ -16598,7 +16598,7 @@ function App() {
 
   // ... (هنا تبدأ بقية أكوادك القديمة مثل const [rootNode, setRootNode] وغيرها)
 
-  if (!rootNode) return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-h-screen bg-[var(--bg-primary)] flex items-center justify-center text-white", children: "جاري التحميل..." });
+  if (!rootNode) return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "min-h-screen bg-ambient flex items-center justify-center text-white", children: "جاري التحميل..." });
 
   // ==========================================
   // 1. قسم الحسابات: وضعناه هنا قبل رسم الشاشة
