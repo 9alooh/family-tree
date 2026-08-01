@@ -4461,10 +4461,9 @@
 :root {
   /* ==========================================================================
      ★ PAGE BACKGROUND COLOR ★
-     Change this single value to change the entire page background color!
-     Example values: #ffffff (white), #0f0c08 (dark gold), #05101a (navy), #111827 (dark gray)
+     Using Option B (Warm Cocoa) to lighten the dark gold theme
      ========================================================================== */
-  --page-bg: #0f0c08;
+  --page-bg: #252017; 
 
   /* Card / panel colors — these stay fixed (separate from page background) */
   --bg-primary: #0f0c08;
@@ -4481,8 +4480,10 @@
 }
 
 :root[data-theme="desert"] {
+  /* Using Option B (Twilight Slate) to lighten the navy theme */
+  --page-bg: #162a3f;
+  
   /* Card / panel colors for desert theme — these stay fixed */
-  --page-bg: #05101a;
   --bg-primary: #05101a;
   --bg-secondary: #0b1c2e;
   --bg-glass: #0b1c2ee0;
