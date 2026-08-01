@@ -15929,30 +15929,28 @@ function searchFamily(query) {
   if (!query.trim()) return [];
   const queryTokens = tokenize(query);
   if (queryTokens.length === 0) return [];
-  const results = searchDocs.map((doc) => {
-    let score = 0;
-    const docTokens = tokenize(doc.path.join(" "));
-    const fullNormalized = normalizeArabic(doc.path.join(" "));
-    const queryNormalized = normalizeArabic(query);
-    if (fullNormalized.includes(queryNormalized)) {
-      score += 2;
+  const results = searchDocs.filter((doc) => {
+    // Build the name chain: [person, father, grandfather, ...]
+    const chain = doc.path.slice().reverse();
+
+    // Every query word must match the START of the corresponding name
+    // queryTokens[0] = person's name (or beginning of it)
+    // queryTokens[1] = father's name (or beginning of it)
+    // etc.
+    for (let i = 0; i < queryTokens.length; i++) {
+      if (i >= chain.length) return false;
+      const qNorm = queryTokens[i];
+      const chainNorm = normalizeArabic(chain[i]);
+      // Prefix match: "أح" matches "أحمد", "صال" matches "صالح" and "صلاح"
+      if (!chainNorm.startsWith(qNorm)) return false;
     }
-    for (const q of queryTokens) {
-      let maxScore = 0;
-      for (const t of docTokens) {
-        const s = fuzzyScore(q, t);
-        if (s > maxScore) maxScore = s;
-      }
-      if (maxScore > 0.6) {
-        score += maxScore;
-      } else {
-        score -= 0.5;
-      }
-    }
-    return { ...doc, score };
+    return true;
   });
-  return results.filter((r) => r.score > 0).sort((a, b) => b.score - a.score).slice(0, 10);
+  return results;
 }
+
+
+
 const SearchPanel = ({ onClose, onSelect }) => {
   const [query, setQuery] = reactExports.useState("");
   const [results, setResults] = reactExports.useState([]);
