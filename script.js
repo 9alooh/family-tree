@@ -15069,7 +15069,8 @@ const RAW_DATA = [
   { id: 122, name: "نادر", father_id: 25 },
   { id: 123, name: "أحمد", father_id: 54 },
   { id: 124, name: "أمير", father_id: 54 },
-  { id: 125, name: "إسلام", father_id: 54 }
+  { id: 125, name: "إسلام", father_id: 54 },
+  { id: 126, name: "سيف الدين", father_id: 28 }
 ];
 function buildTree(data) {
   const stratify$1 = stratify().id((d) => d.id.toString()).parentId((d) => d.father_id !== null ? d.father_id.toString() : null);
@@ -15084,45 +15085,34 @@ function getGenerationStyle(depth, theme) {
   if (theme === "ocean") {
     switch (depth) {
       case 0:
-        return { fill: "#2A1E0F", stroke: "#C4923A", textColor: "#FFFFFF", w: 184, h: 54, rx: 16, fontSize: 15, fontWeight: 800, glowColor: "rgba(196,146,58,0.45)", borderWidth: 2 };
+        return { fill: "#2A1E0F", stroke: "#C4923A", textColor: "#FFFFFF", w: 170, h: 50, rx: 14, fontSize: 18, fontWeight: 800, glowColor: "rgba(196,146,58,0.45)", borderWidth: 2 };
       case 1:
-        return { fill: "#231909", stroke: "#A87B32", textColor: "#EDE4D4", w: 170, h: 50, rx: 14, fontSize: 14, fontWeight: 700, glowColor: "rgba(168,123,50,0.30)", borderWidth: 2 };
+        return { fill: "#231909", stroke: "#A87B32", textColor: "#EDE4D4", w: 170, h: 50, rx: 14, fontSize: 18, fontWeight: 800, glowColor: "rgba(168,123,50,0.30)", borderWidth: 2 };
       case 2:
-        return { fill: "#1E150A", stroke: "#8F6829", textColor: "#E4D8C4", w: 158, h: 46, rx: 13, fontSize: 13, fontWeight: 700, glowColor: "rgba(143,104,41,0.20)", borderWidth: 1.5 };
+        return { fill: "#1E150A", stroke: "#8F6829", textColor: "#E4D8C4", w: 170, h: 50, rx: 14, fontSize: 18, fontWeight: 800, glowColor: "rgba(143,104,41,0.20)", borderWidth: 2 };
       case 3:
-        return { fill: "#1A1208", stroke: "#785A24", textColor: "#DAD0B4", w: 150, h: 44, rx: 12, fontSize: 13, fontWeight: 600, glowColor: "rgba(120,90,36,0.10)", borderWidth: 1.5 };
-      default: {
-        const r = Math.min(depth - 4, 10);
-        const w = Math.max(142 - r * 4, 104);
-        const h = Math.max(40 - r * 2, 30);
-        return { fill: `rgba(26,18,8,${0.92 - r * 0.04})`, stroke: `rgba(196,146,58,${0.55 - r * 0.04})`, textColor: "#D4C8A8", w, h, rx: 10, fontSize: 12, fontWeight: 500, glowColor: "transparent", borderWidth: 1 };
-      }
+        return { fill: "#1A1208", stroke: "#785A24", textColor: "#DAD0B4", w: 170, h: 50, rx: 14, fontSize: 18, fontWeight: 800, glowColor: "rgba(120,90,36,0.10)", borderWidth: 2 };
+      default:
+        return { fill: "rgba(26,18,8,0.92)", stroke: "#C4923A", textColor: "#D4C8A8", w: 170, h: 50, rx: 14, fontSize: 18, fontWeight: 800, glowColor: "transparent", borderWidth: 2 };
     }
   } else {
     switch (depth) {
       case 0:
-        return { fill: "#071C30", stroke: "#2E8BC0", textColor: "#FFFFFF", w: 184, h: 54, rx: 16, fontSize: 15, fontWeight: 800, glowColor: "rgba(46,139,192,0.50)", borderWidth: 2 };
+        return { fill: "#071C30", stroke: "#2E8BC0", textColor: "#FFFFFF", w: 170, h: 50, rx: 14, fontSize: 18, fontWeight: 800, glowColor: "rgba(46,139,192,0.50)", borderWidth: 3 };
       case 1:
-        return { fill: "#061625", stroke: "#2678A8", textColor: "#D0E8F5", w: 170, h: 50, rx: 14, fontSize: 14, fontWeight: 700, glowColor: "rgba(38,120,168,0.30)", borderWidth: 2 };
+        return { fill: "#061625", stroke: "#2678A8", textColor: "#D0E8F5", w: 170, h: 50, rx: 14, fontSize: 18, fontWeight: 800, glowColor: "rgba(38,120,168,0.30)", borderWidth: 3 };
       case 2:
-        return { fill: "#05121E", stroke: "#1E6490", textColor: "#C4DDED", w: 158, h: 46, rx: 13, fontSize: 13, fontWeight: 700, glowColor: "rgba(30,100,144,0.20)", borderWidth: 1.5 };
+        return { fill: "#05121E", stroke: "#1E6490", textColor: "#C4DDED", w: 170, h: 50, rx: 14, fontSize: 18, fontWeight: 800, glowColor: "rgba(30,100,144,0.20)", borderWidth: 3 };
       case 3:
-        return { fill: "#040F18", stroke: "#185278", textColor: "#B8D4E5", w: 150, h: 44, rx: 12, fontSize: 13, fontWeight: 600, glowColor: "rgba(24,82,120,0.10)", borderWidth: 1.5 };
-      default: {
-        const r = Math.min(depth - 4, 10);
-        const w = Math.max(142 - r * 4, 104);
-        const h = Math.max(40 - r * 2, 30);
-        return { fill: `rgba(5,16,26,${0.92 - r * 0.04})`, stroke: `rgba(46,139,192,${0.5 - r * 0.04})`, textColor: "#A8CCDF", w, h, rx: 10, fontSize: 12, fontWeight: 500, glowColor: "transparent", borderWidth: 1 };
-      }
+        return { fill: "#040F18", stroke: "#185278", textColor: "#B8D4E5", w: 170, h: 50, rx: 14, fontSize: 18, fontWeight: 800, glowColor: "rgba(24,82,120,0.10)", borderWidth: 3 };
+      default:
+        return { fill: "rgba(5,16,26,0.92)", stroke: "#2E8BC0", textColor: "#A8CCDF", w: 170, h: 50, rx: 14, fontSize: 18, fontWeight: 800, glowColor: "transparent", borderWidth: 3 };
     }
   }
 }
 function getLinkColor(depth, theme) {
-  if (theme === "ocean") {
-    return `rgba(196,146,58,${Math.max(0.15, 0.55 - depth * 0.05)})`;
-  } else {
-    return `rgba(46,139,192,${Math.max(0.15, 0.55 - depth * 0.05)})`;
-  }
+  // اللون الأبيض المضيء للخطوط في الحالة العادية
+  return `rgba(255, 255, 255, ${Math.max(0.4, 0.85 - depth * 0.04)})`;
 }
 const GENERATION_LABELS = [
   "الجيل الأول — المؤسس",
@@ -15183,7 +15173,7 @@ function useFamilyTree() {
   }, []);
   const applyLayout = reactExports.useCallback((root2) => {
     const isMobile = window.innerWidth <= 768;
-    const nodeWidth = isMobile ? 185 : 185;
+    const nodeWidth = isMobile ? 200 : 200;
     const levelHeight = isMobile ? 145 : 160;
     computeLayout(root2, nodeWidth, levelHeight);
     rootRef.current = root2;
@@ -15226,15 +15216,24 @@ function useFamilyTree() {
     const t = identity.translate(tx, ty).scale(scale);
     select(svgEl).transition().duration(750).call(z.transform, t);
   }, []);
-  const toggleNode = reactExports.useCallback((node) => {
+    const toggleNode = reactExports.useCallback((node) => {
     if (node.children) {
       node._children = node.children;
       node.children = void 0;
     } else if (node._children) {
       node.children = node._children;
       node._children = void 0;
+      
+      // 💡 ONLY OPEN IMMEDIATE CHILDREN (1 level down)
+      // Keeps grandchildren collapsed until their own '+' is clicked
+      node.children.forEach((child) => {
+        if (child.children) {
+          child._children = child.children;
+          child.children = void 0;
+        }
+      });
     }
-    if (rootRef.current) applyLayout(rootRef.current);
+    applyLayout(rootRef.current);
   }, [applyLayout]);
   const expandAll = reactExports.useCallback(() => {
     const root2 = rootRef.current;
@@ -16377,7 +16376,7 @@ const FamilyTreeCanvas = ({
                     onClick: (e) => { e.stopPropagation(); onToggleNode(node); },
                     style: { cursor: "pointer" },
                     children: [
-                      /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { r: 11, fill: "var(--bg-primary)", stroke: "var(--border-strong)", strokeWidth: 1.5 }),
+                      /* @__PURE__ */ jsxRuntimeExports.jsx("circle", { r: 13, fill: "var(--bg-primary)", stroke: "var(--border-strong)", strokeWidth: 1.5 }),
                       /* @__PURE__ */ jsxRuntimeExports.jsx(
                         "text",
                         {
@@ -16385,7 +16384,7 @@ const FamilyTreeCanvas = ({
                           textAnchor: "middle",
                           dominantBaseline: "middle",
                           fill: "var(--text-secondary)",
-                          fontSize: 14,
+                          fontSize: 20,
                           fontWeight: 700,
                           fontFamily: "sans-serif",
                           className: "pointer-events-none select-none",
