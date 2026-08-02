@@ -4463,7 +4463,7 @@
      ★ PAGE BACKGROUND COLOR ★
      Using Option B (Warm Cocoa) to lighten the dark gold theme
      ========================================================================== */
-  --page-bg: #332a1e; 
+  --page-bg: #544638; 
 
   /* Card / panel colors — these stay fixed (separate from page background) */
   --bg-primary: #0f0c08;
@@ -4481,7 +4481,7 @@
 
 :root[data-theme="desert"] {
   /* Using Option B (Twilight Slate) to lighten the navy theme */
-  --page-bg: #1e2a33;
+  --page-bg: #384654;
   
   /* Card / panel colors for desert theme — these stay fixed */
   --bg-primary: #05101a;
@@ -4538,8 +4538,10 @@
 .link {
   fill: none;
   transition: opacity .35s, stroke .35s, stroke-width .35s;
+  
+  /* ONLY change the thickness here */
+  stroke-width: 2.5px !important; 
 }
-
 @keyframes slide-down {
   from {
     opacity: 0;
