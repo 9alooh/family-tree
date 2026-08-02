@@ -5,12 +5,88 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
     <title>شجرة العائلة — النجار</title>
     <meta name="description" content="شجرة عائلة النجار - بحث أكاديمي" />
-        
-    
-      <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <div id="root"></div>
-      <script type="module" src="script.js"></script>
+    <script type="module" src="script.js"></script>
+
+    <!-- ★ CUSTOM ZOOM LIMITER SCRIPT ★ -->
+    <script>
+      (function() {
+        // 1. Intercept the mouse wheel to stop desktop users from zooming out too far
+        window.addEventListener('wheel', function(e) {
+          // Find the tree wrapper
+          const treeWrap = document.querySelector('.tree-canvas-wrap');
+          if (!treeWrap) return;
+
+          // Find the actual element being scaled (either the wrap or its first child)
+          let target = treeWrap.style.transform ? treeWrap : treeWrap.firstElementChild;
+          if (!target) return;
+
+          // Get the current zoom scale
+          let transform = target.style.transform || target.getAttribute('transform') || '';
+          let scale = 1;
+          
+          let scaleMatch = transform.match(/scale\(([^)]+)\)/);
+          if (scaleMatch) {
+            scale = parseFloat(scaleMatch[1]);
+          } else {
+            let matrixMatch = transform.match(/matrix\(([^,]+),/);
+            if (matrixMatch) scale = parseFloat(matrixMatch[1]);
+          }
+
+          // e.deltaY > 0 means zooming out. If scale is at 40% (0.42 buffer), BLOCK the scroll!
+          if (e.deltaY > 0 && scale <= 0.42) {
+            e.preventDefault();
+            e.stopPropagation();
+          }
+        }, { capture: true, passive: false });
+
+
+        // 2. Watcher to catch mobile pinch-to-zoom and physically clamp it
+        const observer = new MutationObserver(function(mutations) {
+          mutations.forEach(function(mutation) {
+            const target = mutation.target;
+            
+            // Check CSS styles
+            if (target.style && target.style.transform) {
+              let t = target.style.transform;
+              if (t.includes('scale(')) {
+                let scaleVal = parseFloat(t.match(/scale\(([^)]+)\)/)[1]);
+                if (scaleVal < 0.4) {
+                  target.style.transform = t.replace(/scale\([^)]+\)/g, 'scale(0.4)');
+                }
+              }
+            }
+            
+            // Check SVG attributes
+            if (target.hasAttribute && target.hasAttribute('transform')) {
+              let t = target.getAttribute('transform');
+              if (t.includes('scale(')) {
+                let scaleVal = parseFloat(t.match(/scale\(([^)]+)\)/)[1]);
+                if (scaleVal < 0.4) {
+                  target.setAttribute('transform', t.replace(/scale\([^)]+\)/g, 'scale(0.4)'));
+                }
+              }
+            }
+          });
+        });
+
+        // Wait 1.5 seconds for the tree to finish loading, then attach our watcher
+        setTimeout(() => {
+          const root = document.getElementById('root');
+          if (root) {
+            observer.observe(root, { 
+              attributes: true, 
+              subtree: true, 
+              attributeFilter: ['style', 'transform'] 
+            });
+          }
+        }, 1500);
+      })();
+    </script>
+    <!-- ★ END CUSTOM SCRIPT ★ -->
+
   </body>
 </html>
