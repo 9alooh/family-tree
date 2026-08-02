@@ -15201,7 +15201,7 @@ function useFamilyTree() {
     setTimeout(() => centerTree(), 1000);
     setTimeout(() => centerTree(), 2000);
   }, []);
-  const centerTree = reactExports.useCallback(() => {
+    const centerTree = reactExports.useCallback((overrideScale) => {
     const svgEl = svgRef.current;
     const z = zoomRef.current;
     const root2 = rootRef.current;
@@ -15220,11 +15220,11 @@ function useFamilyTree() {
     const padX = 60, padY = 80;
     const treeW = maxX - minX + padX * 2;
     const treeH = maxY - minY + padY * 2;
-    const scale = Math.min(W / treeW, (H - 150) / treeH, 0.5);
+    const scale = overrideScale || Math.min(W / treeW, (H - 150) / treeH, 1.2);
     const tx = W / 2 - (minX + maxX) / 2 * scale;
     const ty = 150 + padY * scale - minY * scale;
     const t = identity.translate(tx, ty).scale(scale);
-    select(svgEl).transition().duration(750).call(z.transform, t);
+    select(svgEl).transition().duration(400).call(z.transform, t);
   }, []);
   const toggleNode = reactExports.useCallback((node) => {
     if (node.children) {
@@ -15257,7 +15257,7 @@ function useFamilyTree() {
       }
     });
     applyLayout(root2);
-    setTimeout(centerTree, 100);
+    setTimeout(() => centerTree(0.5), 100);
   }, [applyLayout, centerTree]);
   const collapseAll = reactExports.useCallback(() => {
     const root2 = rootRef.current;
