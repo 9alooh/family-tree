@@ -1,75 +1,31 @@
 <!DOCTYPE html>
+
 <html lang="ar" dir="rtl">
+
   <head>
+
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no" />
+
     <title>شجرة العائلة — النجار</title>
+
     <meta name="description" content="شجرة عائلة النجار - بحث أكاديمي" />
-    <link rel="stylesheet" href="style.css">
+
+        
+
+    
+
+      <link rel="stylesheet" href="style.css">
+
   </head>
+
   <body>
+
     <div id="root"></div>
-    <script type="module" src="script.js"></script>
 
-    <!-- ★ SMART "EXPAND ALL" LIMITER (NO MANUAL RESTRICTIONS) ★ -->
-    <script>
-      (function() {
-        let isAutoZooming = false;
+      <script type="module" src="script.js"></script>
 
-        // 1. Detect when a button (like "Expand All") is clicked
-        window.addEventListener('mousedown', function(e) {
-          // If you clicked a button, wake up the script for 1 second
-          if (e.target.closest('button') || e.target.closest('.btn')) {
-            isAutoZooming = true;
-            setTimeout(() => { isAutoZooming = false; }, 1000);
-          }
-        }, true);
-
-        // 2. Watch the tree's automatic movements
-        const observer = new MutationObserver(function(mutations) {
-          // IF YOU ARE ZOOMING BY HAND, DO ABSOLUTELY NOTHING! No limits.
-          if (!isAutoZooming) return; 
-
-          mutations.forEach(function(mutation) {
-            const target = mutation.target;
-            
-            // Check HTML styles
-            if (target.style && target.style.transform) {
-              let t = target.style.transform;
-              if (t.includes('scale(')) {
-                let scaleVal = parseFloat(t.match(/scale\(([^)]+)\)/)[1]);
-                // If "Expand All" tries to shrink below 40% (0.4), force it to stay at 40%
-                if (scaleVal < 0.4) {
-                  target.style.transform = t.replace(/scale\([^)]+\)/g, 'scale(0.4)');
-                }
-              }
-            }
-            
-            // Check SVG styles
-            if (target.hasAttribute && target.hasAttribute('transform')) {
-              let t = target.getAttribute('transform');
-              if (t.includes('scale(')) {
-                let scaleVal = parseFloat(t.match(/scale\(([^)]+)\)/)[1]);
-                if (scaleVal < 0.4) {
-                  target.setAttribute('transform', t.replace(/scale\([^)]+\)/g, 'scale(0.4)'));
-                }
-              }
-            }
-          });
-        });
-
-        // 3. Attach the watcher to the website
-        setTimeout(() => {
-          const root = document.getElementById('root');
-          if (root) {
-            observer.observe(root, { 
-              attributes: true, 
-              subtree: true, 
-              attributeFilter: ['style', 'transform'] 
-            });
-          }
-        }, 1000);
-      })();
-    </script>
   </body>
+
 </html>
