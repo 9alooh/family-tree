@@ -11,61 +11,47 @@
     <div id="root"></div>
     <script type="module" src="script.js"></script>
 
-    <!-- ★ CUSTOM ZOOM LIMITER SCRIPT ★ -->
+    <!-- ★ SMART AUTO-ZOOM LIMITER ★ -->
     <script>
       (function() {
-        // 1. Intercept the mouse wheel to stop desktop users from zooming out too far
-        window.addEventListener('wheel', function(e) {
-          // Find the tree wrapper
-          const treeWrap = document.querySelector('.tree-canvas-wrap');
-          if (!treeWrap) return;
+        let isSystemZooming = false;
 
-          // Find the actual element being scaled (either the wrap or its first child)
-          let target = treeWrap.style.transform ? treeWrap : treeWrap.firstElementChild;
-          if (!target) return;
+        // 1. When you click ANY button (like "Expand All"), allow the script to clamp the automatic zoom for 1.5 seconds.
+        window.addEventListener('mousedown', function() {
+          isSystemZooming = true;
+          setTimeout(function() { isSystemZooming = false; }, 1500);
+        }, true);
 
-          // Get the current zoom scale
-          let transform = target.style.transform || target.getAttribute('transform') || '';
-          let scale = 1;
-          
-          let scaleMatch = transform.match(/scale\(([^)]+)\)/);
-          if (scaleMatch) {
-            scale = parseFloat(scaleMatch[1]);
-          } else {
-            let matrixMatch = transform.match(/matrix\(([^,]+),/);
-            if (matrixMatch) scale = parseFloat(matrixMatch[1]);
-          }
+        // 2. If you use your mouse wheel or fingers, YOU are in control! Turn off the clamp.
+        window.addEventListener('wheel', function() { isSystemZooming = false; }, { passive: true, capture: true });
+        window.addEventListener('touchmove', function() { isSystemZooming = false; }, { passive: true, capture: true });
 
-          // e.deltaY > 0 means zooming out. If scale is at 40% (0.42 buffer), BLOCK the scroll!
-          if (e.deltaY > 0 && scale <= 0.42) {
-            e.preventDefault();
-            e.stopPropagation();
-          }
-        }, { capture: true, passive: false });
-
-
-        // 2. Watcher to catch mobile pinch-to-zoom and physically clamp it
+        // 3. The observer that actually stops the automatic shrinking
         const observer = new MutationObserver(function(mutations) {
+          if (!isSystemZooming) return; // If you are doing it by hand, let it happen normally!
+
           mutations.forEach(function(mutation) {
             const target = mutation.target;
             
-            // Check CSS styles
+            // Fix CSS styles (React inline styles)
             if (target.style && target.style.transform) {
               let t = target.style.transform;
               if (t.includes('scale(')) {
                 let scaleVal = parseFloat(t.match(/scale\(([^)]+)\)/)[1]);
                 if (scaleVal < 0.4) {
+                  // If the system tries to shrink below 40%, force it back to 40%
                   target.style.transform = t.replace(/scale\([^)]+\)/g, 'scale(0.4)');
                 }
               }
             }
             
-            // Check SVG attributes
+            // Fix SVG attributes (D3/SVG graphs)
             if (target.hasAttribute && target.hasAttribute('transform')) {
               let t = target.getAttribute('transform');
               if (t.includes('scale(')) {
                 let scaleVal = parseFloat(t.match(/scale\(([^)]+)\)/)[1]);
                 if (scaleVal < 0.4) {
+                  // If the system tries to shrink below 40%, force it back to 40%
                   target.setAttribute('transform', t.replace(/scale\([^)]+\)/g, 'scale(0.4)'));
                 }
               }
@@ -73,7 +59,7 @@
           });
         });
 
-        // Wait 1.5 seconds for the tree to finish loading, then attach our watcher
+        // 4. Start watching the tree a moment after the page loads
         setTimeout(() => {
           const root = document.getElementById('root');
           if (root) {
@@ -83,10 +69,9 @@
               attributeFilter: ['style', 'transform'] 
             });
           }
-        }, 1500);
+        }, 1000);
       })();
     </script>
-    <!-- ★ END CUSTOM SCRIPT ★ -->
-
+    <!-- ★ END SMART AUTO-ZOOM LIMITER ★ -->
   </body>
 </html>
