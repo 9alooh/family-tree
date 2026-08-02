@@ -15220,8 +15220,8 @@ function useFamilyTree() {
     const padX = 60, padY = 80;
     const treeW = maxX - minX + padX * 2;
     const treeH = maxY - minY + padY * 2;
-    const scale = Math.min(W / treeW, (H - 150) / treeH, 1.2);
-    const tx = W / 2 - (minX + maxX) / 2 * scale;
+    const scale = Math.max(Math.min(W / treeW, (H - 150) / treeH, 1.2), 0.5);
+    const tx = W / 2 - 0 * scale;
     const ty = 150 + padY * scale - minY * scale;
     const t = identity.translate(tx, ty).scale(scale);
     select(svgEl).transition().duration(750).call(z.transform, t);
@@ -15233,17 +15233,6 @@ function useFamilyTree() {
     } else if (node._children) {
       node.children = node._children;
       node._children = void 0;
-      
-      // 👇 THIS IS THE NEW PART YOU MUST ADD 👇
-      // This forces the next generation to stay closed until you click their '+' button
-      node.children.forEach((child) => {
-        if (child.children) {
-          child._children = child.children;
-          child.children = void 0;
-        }
-      });
-      // 👆 ---------------------------------- 👆
-
     }
     if (rootRef.current) applyLayout(rootRef.current);
   }, [applyLayout]);
