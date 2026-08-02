@@ -15220,7 +15220,7 @@ function useFamilyTree() {
     const padX = 60, padY = 80;
     const treeW = maxX - minX + padX * 2;
     const treeH = maxY - minY + padY * 2;
-    const scale = Math.min(W / treeW, (H - 150) / treeH, 1.2);
+    const scale = Math.min(W / treeW, (H - 150) / treeH, 0.5);
     const tx = W / 2 - (minX + maxX) / 2 * scale;
     const ty = 150 + padY * scale - minY * scale;
     const t = identity.translate(tx, ty).scale(scale);
