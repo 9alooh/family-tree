@@ -11,47 +11,46 @@
     <div id="root"></div>
     <script type="module" src="script.js"></script>
 
-    <!-- ★ SMART AUTO-ZOOM LIMITER ★ -->
+    <!-- ★ SMART "EXPAND ALL" LIMITER (NO MANUAL RESTRICTIONS) ★ -->
     <script>
       (function() {
-        let isSystemZooming = false;
+        let isAutoZooming = false;
 
-        // 1. When you click ANY button (like "Expand All"), allow the script to clamp the automatic zoom for 1.5 seconds.
-        window.addEventListener('mousedown', function() {
-          isSystemZooming = true;
-          setTimeout(function() { isSystemZooming = false; }, 1500);
+        // 1. Detect when a button (like "Expand All") is clicked
+        window.addEventListener('mousedown', function(e) {
+          // If you clicked a button, wake up the script for 1 second
+          if (e.target.closest('button') || e.target.closest('.btn')) {
+            isAutoZooming = true;
+            setTimeout(() => { isAutoZooming = false; }, 1000);
+          }
         }, true);
 
-        // 2. If you use your mouse wheel or fingers, YOU are in control! Turn off the clamp.
-        window.addEventListener('wheel', function() { isSystemZooming = false; }, { passive: true, capture: true });
-        window.addEventListener('touchmove', function() { isSystemZooming = false; }, { passive: true, capture: true });
-
-        // 3. The observer that actually stops the automatic shrinking
+        // 2. Watch the tree's automatic movements
         const observer = new MutationObserver(function(mutations) {
-          if (!isSystemZooming) return; // If you are doing it by hand, let it happen normally!
+          // IF YOU ARE ZOOMING BY HAND, DO ABSOLUTELY NOTHING! No limits.
+          if (!isAutoZooming) return; 
 
           mutations.forEach(function(mutation) {
             const target = mutation.target;
             
-            // Fix CSS styles (React inline styles)
+            // Check HTML styles
             if (target.style && target.style.transform) {
               let t = target.style.transform;
               if (t.includes('scale(')) {
                 let scaleVal = parseFloat(t.match(/scale\(([^)]+)\)/)[1]);
+                // If "Expand All" tries to shrink below 40% (0.4), force it to stay at 40%
                 if (scaleVal < 0.4) {
-                  // If the system tries to shrink below 40%, force it back to 40%
                   target.style.transform = t.replace(/scale\([^)]+\)/g, 'scale(0.4)');
                 }
               }
             }
             
-            // Fix SVG attributes (D3/SVG graphs)
+            // Check SVG styles
             if (target.hasAttribute && target.hasAttribute('transform')) {
               let t = target.getAttribute('transform');
               if (t.includes('scale(')) {
                 let scaleVal = parseFloat(t.match(/scale\(([^)]+)\)/)[1]);
                 if (scaleVal < 0.4) {
-                  // If the system tries to shrink below 40%, force it back to 40%
                   target.setAttribute('transform', t.replace(/scale\([^)]+\)/g, 'scale(0.4)'));
                 }
               }
@@ -59,7 +58,7 @@
           });
         });
 
-        // 4. Start watching the tree a moment after the page loads
+        // 3. Attach the watcher to the website
         setTimeout(() => {
           const root = document.getElementById('root');
           if (root) {
@@ -72,6 +71,5 @@
         }, 1000);
       })();
     </script>
-    <!-- ★ END SMART AUTO-ZOOM LIMITER ★ -->
   </body>
 </html>
